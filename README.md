@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Noorish App
+
+A Next.js nutrition-focused meal planning app with 2-week meal plans, shopping lists, and ingredient swaps.
+
+## Features
+
+- 📅 2-week meal plan with daily protein targets
+- 🛒 Shopping list organized by category (Proteins, Produce, Pantry)
+- 🔄 Ingredient swaps for dietary preferences
+- ❤️ Save favorite meals
+- ✅ Track daily meal completion
+- 📱 Mobile-first responsive design
+
+## Tech Stack
+
+- **Frontend**: Next.js 14 (App Router), React, TypeScript
+- **Backend**: Next.js API routes
+- **Database**: SQLite (local) / Turso (production)
+- **ORM**: Drizzle ORM
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Seed the database:
+```bash
+npx tsx scripts/seed.ts
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment to Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Local SQLite (Development)
+```bash
+vercel
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Turso Database (Production)
 
-## Deploy on Vercel
+1. Create a Turso database:
+```bash
+turso db create noorish
+turso db show noorish --url
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Update `.env.local` with your Turso credentials:
+```
+DATABASE_URL=libsql://your-database-name.turso.io
+TURSO_AUTH_TOKEN=your-auth-token
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Add environment variables in Vercel dashboard:
+   - `DATABASE_URL`
+   - `TURSO_AUTH_TOKEN`
+
+4. Deploy:
+```bash
+vercel --prod
+```
+
+## Project Structure
+
+```
+noorish-app/
+├── app/
+│   ├── api/
+│   │   ├── meals/         # Meal plan API
+│   │   ├── shopping/      # Shopping list API
+│   │   ├── favorites/     # Favorites API
+│   │   └── progress/      # Meal tracking API
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx          # Main app page
+├── components/
+│   ├── Icons.tsx          # SVG icons
+│   ├── BottomNavigation.tsx
+│   ├── TodayScreen.tsx
+│   ├── PlanScreen.tsx
+│   ├── ShoppingScreen.tsx
+│   ├── FavoritesScreen.tsx
+│   └── MealDetailSheet.tsx
+├── lib/
+│   ├── db/
+│   │   ├── schema.ts      # Database schema
+│   │   └── index.ts       # Database connection
+│   └── meal-data.ts       # Meal plan data
+├── scripts/
+│   └── seed.ts            # Database seeding
+└── drizzle.config.ts     # Drizzle configuration
+```
+
+## API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/meals` | GET | Get all meal plans |
+| `/api/meals` | POST | Log a meal as eaten |
+| `/api/shopping` | GET | Get shopping list |
+| `/api/shopping` | POST | Check/uncheck item |
+| `/api/favorites` | GET | Get all favorites |
+| `/api/favorites` | POST | Add/remove favorite |
+| `/api/progress` | GET | Get daily progress |
+| `/api/progress` | POST | Update meal status |
