@@ -1,19 +1,15 @@
 // API route: GET /api/progress - Get meal progress for a date
 // API route: POST /api/progress - Update meal eaten status
 import { NextRequest, NextResponse } from 'next/server';
-import { getLocalDb } from '@/lib/db';
-import { mealLogs } from '@/lib/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { getMealLogs, updateMealLog } from '@/lib/db';
+import { MealType } from '@/lib/meal-data';
 
 export async function GET(request: NextRequest) {
   try {
-    const db = getLocalDb();
     const { searchParams } = new URL(request.url);
     const date = searchParams.get('date') || new Date().toISOString().split('T')[0];
     
-    const logs = db.select().from(mealLogs)
-      .where(eq(mealLogs.date, date))
-      .all();
+    const logs = getMealLogs(date);
     
     return NextResponse.json({ success: true, data: logs });
   } catch (error) {
@@ -27,7 +23,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const db = getLocalDb();
     const body = await request.json();
     
     const { date, mealType, wasEaten } = body;
@@ -39,16 +34,12 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Check if log exists for this date and meal
-    const existing = db.select().from(mealLogs)
-      .where(and(eq(mealLogs.date, date), eq(mealLogs.mealType, mealType)))
-      .get();
+    // Find and update the log
+    const logs = getMealLogs(date);
+    const log = logs.find(l => l.mealType === mealType);
     
-    if (existing) {
-      db.update(mealLogs)
-        .set({ wasEaten })
-        .where(eq(mealLogs.id, existing.id))
-        .run();
+    if (log) {
+      updateMealLog(log.id, wasEaten);
     }
     
     return NextResponse.json({ success: true });

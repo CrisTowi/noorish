@@ -1,14 +1,12 @@
 // API route: GET /api/favorites - Get all favorites
 // API route: POST /api/favorites - Add/remove favorite
 import { NextRequest, NextResponse } from 'next/server';
-import { getLocalDb } from '@/lib/db';
-import { favorites } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { getFavorites, addFavorite, removeFavorite } from '@/lib/db';
+import { MealType } from '@/lib/meal-data';
 
 export async function GET() {
   try {
-    const db = getLocalDb();
-    const allFavorites = db.select().from(favorites).all();
+    const allFavorites = getFavorites();
     return NextResponse.json({ success: true, data: allFavorites });
   } catch (error) {
     console.error('Error fetching favorites:', error);
@@ -21,13 +19,12 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const db = getLocalDb();
     const body = await request.json();
     
     const { mealName, mealType, proteinGrams, calories, action } = body;
     
     if (action === 'remove') {
-      db.delete(favorites).where(eq(favorites.mealName, mealName)).run();
+      removeFavorite(mealName);
       return NextResponse.json({ success: true, removed: true });
     }
     
@@ -38,23 +35,15 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Check if already exists
-    const existing = db.select().from(favorites)
-      .where(eq(favorites.mealName, mealName))
-      .get();
+    addFavorite({
+      name: mealName,
+      mealType: mealType as MealType,
+      proteinGrams: proteinGrams || 0,
+      calories: calories || 0,
+      savedAt: Date.now(),
+    });
     
-    if (existing) {
-      return NextResponse.json({ success: true, data: existing, alreadyExists: true });
-    }
-    
-    const newFavorite = db.insert(favorites).values({
-      mealName,
-      mealType,
-      proteinGrams: proteinGrams || null,
-      calories: calories || null,
-    }).returning().get();
-    
-    return NextResponse.json({ success: true, data: newFavorite });
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error saving favorite:', error);
     return NextResponse.json(
