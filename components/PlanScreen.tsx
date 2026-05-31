@@ -77,7 +77,7 @@ export function PlanScreen() {
         <span className="prep-badge">{Object.values(completedSteps).filter(Boolean).length}/{PREP_STEPS.length}</span>
       </button>
 
-      <div className="card" style={{ margin: '14px 20px 0' }}>
+      <div className="card my-5">
         {PREP_STEPS.map((step, index) => (
           <div
             key={index}

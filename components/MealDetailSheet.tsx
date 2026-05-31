@@ -127,7 +127,7 @@ export function MealDetailSheet({ meal, mealType, favorites, setFavorites, onClo
         <div className="sheet-handle-row">
           <span className="sheet-handle-spacer" />
           <div className="sheet-handle-bar" />
-          <span className="sheet-handle-spacer" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <span className="sheet-handle-spacer sheet-handle-spacer--end">
             <button className="sheet-close" onClick={onClose} aria-label="Close">
               <Icon name="x" size={14} />
             </button>

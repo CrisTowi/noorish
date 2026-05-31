@@ -77,8 +77,8 @@ export default function Home() {
         <div className="logo-bar">
           <Logo />
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minHeight: '60vh' }}>
-          <div style={{ color: 'var(--muted)' }}>Loading...</div>
+        <div className="loading-center">
+          <span className="loading-text">Loading...</span>
         </div>
       </div>
     );

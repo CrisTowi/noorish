@@ -181,13 +181,13 @@ export function TodayScreen({ eaten, setEaten, mealOverrides, setMealOverrides, 
         })}
       </div>
 
-      <div style={{ height: 20 }} />
+      <div className="h-5" />
 
       {/* Tomorrow carousel */}
-      <div style={{ padding: '0 20px', marginBottom: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <p className="section-label" style={{ marginBottom: 0 }}>Tomorrow · {tomorrowData.full}</p>
-          <span style={{ fontSize: 10, color: 'var(--muted-light)' }}>swipe ›</span>
+      <div className="px-5 mb-3">
+        <div className="flex-row-between">
+          <p className="section-label mb-0">Tomorrow · {tomorrowData.full}</p>
+          <span className="text-swipe-hint">swipe ›</span>
         </div>
       </div>
       <div className="carousel-scroll">
@@ -203,7 +203,7 @@ export function TodayScreen({ eaten, setEaten, mealOverrides, setMealOverrides, 
                   </button>
                 </div>
                 <div className="meal-name">{meal.name}</div>
-                <div className="meal-meta" style={{ marginTop: 4 }}>~{meal.protein}g protein · {MEAL_TIMES[type]}</div>
+                <div className="meal-meta mt-1">~{meal.protein}g protein · {MEAL_TIMES[type]}</div>
               </div>
             );
           })}
@@ -217,7 +217,7 @@ export function TodayScreen({ eaten, setEaten, mealOverrides, setMealOverrides, 
             <div className="modal-handle" />
             <div className="modal-title">Swap {MEAL_LABELS[swapModal.mealType]}</div>
             <div className="modal-sub">Choose a day to swap with</div>
-            <div style={{ maxHeight: 360, overflowY: 'auto' }}>
+            <div className="scroll-auto">
               {allDays.filter((d) => !(d.week === swapStep?.srcWeek && d.dayIdx === swapStep?.srcDay)).map((d, i) => {
                 const m = mealOverrides[`${d.week}-${d.dayIdx}-${swapModal.mealType}`] || MEAL_PLAN[d.week].days[d.dayIdx].meals[swapModal.mealType];
                 return (

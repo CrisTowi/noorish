@@ -56,7 +56,7 @@ const icons: Record<IconName, ReactNode> = {
 
 export function Icon({ name, size = 16, ...props }: IconProps) {
   return (
-    <span style={{ display: 'inline-flex', width: size, height: size, flexShrink: 0 }} {...props}>
+    <span className="icon-container" style={{ width: size, height: size }} {...props}>
       {icons[name]}
     </span>
   );

@@ -96,7 +96,7 @@ export function ShoppingScreen() {
             <div className={`shop-check ${checkedItems[item.item] ? 'checked' : ''}`}>
               {checkedItems[item.item] && '✓'}
             </div>
-            <div style={{ flex: 1 }}>
+            <div className="shop-item-info">
               <div className={`shop-item-name ${checkedItems[item.item] ? 'checked' : ''}`}>
                 {item.item}
               </div>
@@ -110,11 +110,11 @@ export function ShoppingScreen() {
       </div>
 
       {/* Progress indicator */}
-      <div className="card" style={{ margin: '14px 20px 20px' }}>
-        <div style={{ padding: '16px 18px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-            <span style={{ fontSize: 13, color: 'var(--ink-soft)' }}>Shopping progress</span>
-            <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--olive)' }}>{checkedCount}/{totalCount}</span>
+      <div className="card my-5">
+        <div className="card-padding">
+          <div className="flex-row-between mb-2">
+            <span className="text-caption">Shopping progress</span>
+            <span className="text-caption-bold">{checkedCount}/{totalCount}</span>
           </div>
           <div className="progress-track">
             <div className="progress-fill" style={{ width: `${(checkedCount / totalCount) * 100}%` }} />

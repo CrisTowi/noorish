@@ -86,7 +86,9 @@ export function FavoritesScreen({ favorites, setFavorites }: FavoritesScreenProp
       </div>
 
       {loading ? (
-        <div style={{ padding: 40, textAlign: 'center', color: 'var(--muted)' }}>Loading...</div>
+        <div className="loading-center">
+          <span className="loading-text">Loading...</span>
+        </div>
       ) : favoritesList.length === 0 ? (
         <div className="fav-empty">
           <div className="fav-empty-icon">
@@ -100,9 +102,9 @@ export function FavoritesScreen({ favorites, setFavorites }: FavoritesScreenProp
           </p>
         </div>
       ) : (
-        <div className="card" style={{ margin: '0 20px' }}>
+        <div className="card">
           {favoritesList.map((fav, index) => (
-            <div key={index} className="fav-card" style={{ borderBottom: index < favoritesList.length - 1 ? '1px solid var(--border)' : 'none' }}>
+            <div key={index} className={`fav-card${index < favoritesList.length - 1 ? ' fav-card-bordered' : ''}`}>
               <div className="fav-card-info">
                 <div className="fav-card-name">{fav.name}</div>
                 <div className="fav-card-meta">{fav.protein}g protein · {fav.calories} kcal</div>
