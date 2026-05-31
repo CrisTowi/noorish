@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nourish — Style Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    /* ── Color tokens ── */
+    --sand:         #F5F0E8;
+    --sand-deep:    #EDE6D6;
+    --olive:        #6B7A5A;
+    --olive-light:  #8A9970;
+    --olive-pale:   #E8EDE0;
+    --sky:          #B8D4DC;
+    --sky-deep:     #7AAAB8;
+    --ink:          #1A1A1A;
+    --ink-soft:     #3D3D3D;
+    --muted:        #8A8A8A;
+    --muted-light:  #C5C5C5;
+    --white:        #FFFFFF;
+    --surface:      #FAFAF7;
+    --border:       #E5E0D5;
+    --success:      #7A9B6A;
+
+    /* ── Typography ── */
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:  'DM Sans', system-ui, sans-serif;
+
+    /* ── Radius ── */
+    --radius:    16px;
+    --radius-sm: 10px;
+
+    /* ── Spacing ── */
+    --space-4:  4px;
+    --space-8:  8px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-20: 20px;
+    --space-24: 24px;
+    --space-32: 32px;
+    --space-48: 48px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-sans);
+    background: #F0EDE6;
+    color: var(--ink);
+    padding: 48px 32px;
+    line-height: 1.5;
+  }
+
+  /* ── Guide layout ── */
+  .guide { max-width: 880px; margin: 0 auto; }
+
+  .guide-title {
+    font-family: var(--font-serif);
+    font-size: 52px; font-weight: 300;
+    letter-spacing: -0.02em; margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .guide-subtitle { font-size: 14px; color: var(--muted); margin-bottom: 56px; }
+
+  .section { margin-bottom: 56px; }
+  .section-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--olive); margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Color swatches ── */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+  .swatch {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .swatch-color { height: 72px; }
+  .swatch-info { padding: 10px 12px; background: var(--white); }
+  .swatch-name { font-size: 12px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+  .swatch-token { font-size: 10px; color: var(--muted); font-family: 'Courier New', monospace; margin-bottom: 2px; }
+  .swatch-hex { font-size: 10px; color: var(--muted-light); font-family: 'Courier New', monospace; }
+
+  /* ── Type scale ── */
+  .type-row {
+    display: flex; align-items: baseline; gap: 20px;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { min-width: 200px; }
+  .type-meta-name { font-size: 12px; font-weight: 500; color: var(--ink); }
+  .type-meta-detail { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: 'Courier New', monospace; }
+  .type-preview { flex: 1; }
+
+  /* ── Spacing ── */
+  .space-grid { display: flex; flex-direction: column; gap: 12px; }
+  .space-row { display: flex; align-items: center; gap: 16px; }
+  .space-bar-wrap { display: flex; align-items: center; }
+  .space-bar { height: 20px; background: var(--olive-pale); border: 1.5px solid var(--olive-light); border-radius: 3px; }
+  .space-meta-name { font-size: 12px; font-weight: 500; min-width: 80px; }
+  .space-meta-val  { font-size: 11px; color: var(--muted); font-family: 'Courier New', monospace; min-width: 36px; }
+
+  /* ── Radius ── */
+  .radius-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+  .radius-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .radius-box { width: 80px; height: 80px; background: var(--white); border: 1.5px solid var(--border); }
+  .radius-meta { text-align: center; }
+  .radius-name  { font-size: 12px; font-weight: 500; }
+  .radius-val   { font-size: 10px; color: var(--muted); font-family: 'Courier New', monospace; }
+
+  /* ── Component samples ── */
+  .component-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .component-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+  }
+  .component-card-title { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+
+  /* Nav preview */
+  .nav-preview { display: flex; background: rgba(250,250,247,0.96); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; padding: 8px 0; }
+  .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0; }
+  .nav-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+  .nav-item.active .nav-icon { background: var(--olive-pale); }
+  .nav-dot { width: 18px; height: 18px; border-radius: 3px; background: currentColor; opacity: 0.5; }
+  .nav-label { font-size: 10px; font-weight: 500; color: var(--muted); }
+  .nav-item.active .nav-label { color: var(--olive); }
+  .nav-item.active .nav-dot { opacity: 1; color: var(--olive); }
+
+  /* Meal card preview */
+  .meal-card { display: flex; align-items: center; gap: 12px; padding: 13px 14px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; }
+  .meal-check { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--muted-light); flex-shrink: 0; }
+  .meal-check.done { background: var(--olive); border-color: var(--olive); }
+  .meal-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--olive); margin-bottom: 2px; }
+  .meal-name { font-size: 14px; color: var(--ink-soft); }
+  .meal-meta { font-size: 11px; color: var(--muted); }
+  .swap-btn { width: 28px; height: 28px; border-radius: 8px; border: 1.5px solid var(--border); background: none; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .swap-icon { width: 12px; height: 12px; border: 1.5px solid var(--ink); border-radius: 1px; }
+
+  /* Badge */
+  .badge { display: inline-flex; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; }
+  .badge-olive { background: var(--olive-pale); color: var(--olive); }
+  .badge-sky   { background: var(--sky); color: var(--sky-deep); }
+  .badge-sand  { background: var(--sand-deep); color: var(--ink-soft); }
+
+  /* Macro pill */
+  .macro-row { display: flex; gap: 8px; }
+  .macro-pill { flex: 1; text-align: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 4px; }
+  .macro-val { font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1; }
+  .macro-val.protein { color: var(--olive); }
+  .macro-label { font-size: 9px; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; margin-top: 3px; }
+
+  /* Hero card */
+  .hero-card { background: var(--olive); border-radius: var(--radius); padding: 20px; color: white; }
+  .hero-date { font-size: 10px; opacity: 0.65; letter-spacing: 0.1em; text-transform: uppercase; }
+  .hero-day { font-family: var(--font-serif); font-size: 26px; font-weight: 300; margin: 4px 0 12px; }
+  .hero-pill { display: inline-flex; background: rgba(255,255,255,0.18); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; }
+
+  /* Sheet preview */
+  .sheet-preview { background: var(--surface); border-radius: 20px 20px 0 0; border: 1px solid var(--border); overflow: hidden; }
+  .sheet-handle-row { display: flex; align-items: center; padding: 12px 14px 8px; }
+  .sheet-handle-spacer { flex: 1; }
+  .sheet-handle-bar { width: 36px; height: 4px; background: var(--border); border-radius: 2px; }
+  .sheet-close { width: 26px; height: 26px; background: var(--sand-deep); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .sheet-x { width: 10px; height: 10px; opacity: 0.5; background: var(--ink); border-radius: 1px; }
+  .sheet-header { padding: 2px 14px 14px; border-bottom: 1px solid var(--border); }
+  .sheet-badge { display: inline-flex; font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--olive); background: var(--olive-pale); padding: 3px 8px; border-radius: 20px; margin-bottom: 6px; }
+  .sheet-title { font-family: var(--font-serif); font-size: 20px; font-weight: 300; color: var(--ink); margin-bottom: 12px; }
+
+  /* Progress */
+  .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .progress-track { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--olive); border-radius: 2px; }
+  .progress-label { font-size: 11px; color: var(--muted); }
+
+  /* Token table */
+  .token-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .token-table th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); }
+  .token-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .token-table tr:last-child td { border-bottom: none; }
+  .token-table td:first-child { font-family: 'Courier New', monospace; color: var(--olive); }
+  .token-table td:nth-child(2) { color: var(--ink-soft); }
+  .token-table td:nth-child(3) { font-family: 'Courier New', monospace; color: var(--muted); font-size: 11px; }
+  .token-table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+
+  /* Figma note */
+  .figma-note {
+    background: var(--olive-pale);
+    border: 1px solid var(--olive-light);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    font-size: 13px; color: var(--olive);
+    line-height: 1.6;
+    margin-top: 8px;
+  }
+  .figma-note strong { font-weight: 600; display: block; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="guide">
+
+  <div class="guide-title">Nourish</div>
+  <div class="guide-subtitle">Design System & Style Guide v1.0 — Hormone & Muscle Protocol App</div>
+
+  <!-- COLORS -->
+  <div class="section">
+    <div class="section-label">Color Tokens</div>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1A1A1A;"></div>
+        <div class="swatch-info"><div class="swatch-name">Ink</div><div class="swatch-token">--ink</div><div class="swatch-hex">#1A1A1A</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#3D3D3D;"></div>
+        <div class="swatch-info"><div class="swatch-name">Ink Soft</div><div class="swatch-token">--ink-soft</div><div class="swatch-hex">#3D3D3D</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#8A8A8A;"></div>
+        <div class="swatch-info"><div class="swatch-name">Muted</div><div class="swatch-token">--muted</div><div class="swatch-hex">#8A8A8A</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#C5C5C5;"></div>
+        <div class="swatch-info"><div class="swatch-name">Muted Light</div><div class="swatch-token">--muted-light</div><div class="swatch-hex">#C5C5C5</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#6B7A5A;"></div>
+        <div class="swatch-info"><div class="swatch-name">Olive</div><div class="swatch-token">--olive</div><div class="swatch-hex">#6B7A5A</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#8A9970;"></div>
+        <div class="swatch-info"><div class="swatch-name">Olive Light</div><div class="swatch-token">--olive-light</div><div class="swatch-hex">#8A9970</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#E8EDE0;"></div>
+        <div class="swatch-info"><div class="swatch-name">Olive Pale</div><div class="swatch-token">--olive-pale</div><div class="swatch-hex">#E8EDE0</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#B8D4DC;"></div>
+        <div class="swatch-info"><div class="swatch-name">Sky</div><div class="swatch-token">--sky</div><div class="swatch-hex">#B8D4DC</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#7AAAB8;"></div>
+        <div class="swatch-info"><div class="swatch-name">Sky Deep</div><div class="swatch-token">--sky-deep</div><div class="swatch-hex">#7AAAB8</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F5F0E8;"></div>
+        <div class="swatch-info"><div class="swatch-name">Sand</div><div class="swatch-token">--sand</div><div class="swatch-hex">#F5F0E8</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#EDE6D6;"></div>
+        <div class="swatch-info"><div class="swatch-name">Sand Deep</div><div class="swatch-token">--sand-deep</div><div class="swatch-hex">#EDE6D6</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FAFAF7; border:1px solid #E5E0D5;"></div>
+        <div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-token">--surface</div><div class="swatch-hex">#FAFAF7</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFFFFF; border:1px solid #E5E0D5;"></div>
+        <div class="swatch-info"><div class="swatch-name">White</div><div class="swatch-token">--white</div><div class="swatch-hex">#FFFFFF</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#E5E0D5;"></div>
+        <div class="swatch-info"><div class="swatch-name">Border</div><div class="swatch-token">--border</div><div class="swatch-hex">#E5E0D5</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#7A9B6A;"></div>
+        <div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-token">--success</div><div class="swatch-hex">#7A9B6A</div></div>
+      </div>
+    </div>
+
+    <div class="figma-note" style="margin-top:16px;">
+      <strong>Figma Variables</strong>
+      Create a local Variable collection named <code>Nourish/Tokens</code>. Add each token as a Color variable using the names above (e.g. <code>ink</code>, <code>olive</code>, <code>sand</code>). Bind to hex values. Create a second mode called <code>Dark</code> if needed later.
+    </div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div class="section">
+    <div class="section-label">Typography</div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Display / Page Title</div>
+        <div class="type-meta-detail">Cormorant Garamond / 300<br/>34px / lh 1.1 / ls -0.01em</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:var(--font-serif); font-size:34px; font-weight:300; line-height:1.1; letter-spacing:-0.01em; color:var(--ink);">Your Day</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Sheet Title</div>
+        <div class="type-meta-detail">Cormorant Garamond / 300<br/>26px / lh 1.2</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:var(--font-serif); font-size:26px; font-weight:300; line-height:1.2; color:var(--ink);">Avocado & 3 Poached Eggs</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Card Title / Day</div>
+        <div class="type-meta-detail">Cormorant Garamond / 400<br/>20px / lh 1.2</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:var(--font-serif); font-size:20px; font-weight:400; color:var(--ink);">Monday</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Body / Meal Name</div>
+        <div class="type-meta-detail">DM Sans / 400<br/>14px / lh 1.3</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:var(--font-sans); font-size:14px; font-weight:400; line-height:1.3; color:var(--ink-soft);">6oz Beef & Broccoli Stir-fry</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Body Small / Meta</div>
+        <div class="type-meta-detail">DM Sans / 400<br/>13px / color: muted</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:var(--font-sans); font-size:13px; font-weight:400; color:var(--muted);">8:00 AM · ~40g protein</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Macro Value</div>
+        <div class="type-meta-detail">DM Sans / 600<br/>16px / lh 1</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:var(--font-sans); font-size:16px; font-weight:600; color:var(--ink); line-height:1;">377</span>
+        <span style="font-family:var(--font-sans); font-size:16px; font-weight:600; color:var(--olive); line-height:1; margin-left:16px;">20g</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Eyebrow / Badge / Label</div>
+        <div class="type-meta-detail">DM Sans / 600<br/>10px / ls 0.12–0.18em / uppercase</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:var(--font-sans); font-size:10px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--olive);">Today · May 30</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Caption / Qty</div>
+        <div class="type-meta-detail">DM Sans / 400<br/>11px / color: muted</div>
+      </div>
+      <div class="type-preview">
+        <span style="font-family:var(--font-sans); font-size:11px; font-weight:400; color:var(--muted);">3 large · 210 kcal</span>
+      </div>
+    </div>
+
+    <div class="figma-note" style="margin-top:16px;">
+      <strong>Figma Text Styles</strong>
+      Create a <code>Nourish/Type</code> style group with: <code>Display</code>, <code>Sheet Title</code>, <code>Card Day</code>, <code>Body/Meal</code>, <code>Body/Meta</code>, <code>Macro Value</code>, <code>Eyebrow</code>, <code>Caption</code>. Bind font tokens to the Google Fonts sources: Cormorant Garamond and DM Sans.
+    </div>
+  </div>
+
+  <!-- SPACING -->
+  <div class="section">
+    <div class="section-label">Spacing Scale</div>
+    <div class="space-grid">
+      <div class="space-row">
+        <div class="space-meta-name">space-4</div>
+        <div class="space-meta-val">4px</div>
+        <div class="space-bar-wrap"><div class="space-bar" style="width:4px;"></div></div>
+      </div>
+      <div class="space-row">
+        <div class="space-meta-name">space-8</div>
+        <div class="space-meta-val">8px</div>
+        <div class="space-bar-wrap"><div class="space-bar" style="width:8px;"></div></div>
+      </div>
+      <div class="space-row">
+        <div class="space-meta-name">space-12</div>
+        <div class="space-meta-val">12px</div>
+        <div class="space-bar-wrap"><div class="space-bar" style="width:12px;"></div></div>
+      </div>
+      <div class="space-row">
+        <div class="space-meta-name">space-16</div>
+        <div class="space-meta-val">16px</div>
+        <div class="space-bar-wrap"><div class="space-bar" style="width:16px;"></div></div>
+      </div>
+      <div class="space-row">
+        <div class="space-meta-name">space-20</div>
+        <div class="space-meta-val">20px</div>
+        <div class="space-bar-wrap"><div class="space-bar" style="width:20px;"></div></div>
+      </div>
+      <div class="space-row">
+        <div class="space-meta-name">space-24</div>
+        <div class="space-meta-val">24px</div>
+        <div class="space-bar-wrap"><div class="space-bar" style="width:24px;"></div></div>
+      </div>
+      <div class="space-row">
+        <div class="space-meta-name">space-32</div>
+        <div class="space-meta-val">32px</div>
+        <div class="space-bar-wrap"><div class="space-bar" style="width:32px;"></div></div>
+      </div>
+      <div class="space-row">
+        <div class="space-meta-name">space-48</div>
+        <div class="space-meta-val">48px</div>
+        <div class="space-bar-wrap"><div class="space-bar" style="width:48px;"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:14px; font-size:12px; color:var(--muted);">Base unit: 4px. All spacing is a multiple of 4. Screen horizontal padding: 20px. Page top padding: 52px.</div>
+  </div>
+
+  <!-- RADIUS -->
+  <div class="section">
+    <div class="section-label">Border Radius</div>
+    <div class="radius-grid">
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius:0;"></div>
+        <div class="radius-meta"><div class="radius-name">None</div><div class="radius-val">0px</div></div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius:10px;"></div>
+        <div class="radius-meta"><div class="radius-name">Small</div><div class="radius-val">--radius-sm · 10px</div></div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius:16px;"></div>
+        <div class="radius-meta"><div class="radius-name">Default</div><div class="radius-val">--radius · 16px</div></div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius:24px;"></div>
+        <div class="radius-meta"><div class="radius-name">Large</div><div class="radius-val">24px (sheets)</div></div>
+      </div>
+      <div class="radius-item">
+        <div class="radius-box" style="border-radius:40px;"></div>
+        <div class="radius-meta"><div class="radius-name">Pill</div><div class="radius-val">9999px (badges)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPONENTS -->
+  <div class="section">
+    <div class="section-label">Components</div>
+    <div class="component-grid">
+
+      <!-- Nav bar -->
+      <div class="component-card">
+        <div class="component-card-title">Bottom Nav</div>
+        <div class="nav-preview">
+          <div class="nav-item active">
+            <div class="nav-icon"><div class="nav-dot" style="color:var(--olive);"></div></div>
+            <div class="nav-label" style="color:var(--olive);">Today</div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-icon"><div class="nav-dot"></div></div>
+            <div class="nav-label">Plan</div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-icon"><div class="nav-dot"></div></div>
+            <div class="nav-label">Shop</div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-icon"><div class="nav-dot"></div></div>
+            <div class="nav-label">Saved</div>
+          </div>
+        </div>
+        <div style="margin-top:10px; font-size:11px; color:var(--muted);">Height: 72px + safe area · Frosted glass bg · z-index 100</div>
+      </div>
+
+      <!-- Hero card -->
+      <div class="component-card">
+        <div class="component-card-title">Today Hero Card</div>
+        <div class="hero-card">
+          <div class="hero-date">Friday, May 30</div>
+          <div class="hero-day">Monday</div>
+          <div><span class="hero-pill">54g eaten</span></div>
+        </div>
+        <div style="margin-top:10px; font-size:11px; color:var(--muted);">bg: --olive · radius: --radius · padding: 22px</div>
+      </div>
+
+      <!-- Meal card -->
+      <div class="component-card">
+        <div class="component-card-title">Meal Card</div>
+        <div class="meal-card">
+          <div class="meal-check"></div>
+          <div style="flex:1">
+            <div class="meal-badge">Breakfast</div>
+            <div class="meal-name">Avocado & 3 Poached Eggs</div>
+            <div class="meal-meta">8:00 AM · ~30g protein</div>
+          </div>
+          <div class="swap-btn"><div class="swap-icon"></div></div>
+        </div>
+        <div class="meal-card" style="opacity:0.5;">
+          <div class="meal-check done"></div>
+          <div style="flex:1">
+            <div class="meal-badge">Lunch</div>
+            <div class="meal-name">Kale & Quinoa w/ Salmon</div>
+            <div class="meal-meta">12:30 PM · ~35g protein</div>
+          </div>
+        </div>
+        <div style="margin-top:6px; font-size:11px; color:var(--muted);">Tap check = mark eaten (animated) · Tap body = open sheet</div>
+      </div>
+
+      <!-- Badges -->
+      <div class="component-card">
+        <div class="component-card-title">Badges & Pills</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div><span class="badge badge-olive">Breakfast</span></div>
+          <div><span class="badge badge-sky">Week 1</span></div>
+          <div><span class="badge badge-sand">Sunday Prep</span></div>
+          <div style="display:inline-flex; background:var(--olive-pale); color:var(--olive); font-size:11px; font-weight:600; padding:3px 9px; border-radius:20px;">3/5 done</div>
+        </div>
+        <div style="margin-top:10px; font-size:11px; color:var(--muted);">font-size: 10px · font-weight: 600 · ls: 0.1em · uppercase</div>
+      </div>
+
+      <!-- Macro pills -->
+      <div class="component-card">
+        <div class="component-card-title">Macro Pills</div>
+        <div class="macro-row">
+          <div class="macro-pill"><div class="macro-val">377</div><div class="macro-label">kcal</div></div>
+          <div class="macro-pill"><div class="macro-val protein">20g</div><div class="macro-label">protein</div></div>
+          <div class="macro-pill"><div class="macro-val">8g</div><div class="macro-label">carbs</div></div>
+          <div class="macro-pill"><div class="macro-val">31g</div><div class="macro-label">fat</div></div>
+        </div>
+        <div style="margin-top:10px; font-size:11px; color:var(--muted);">Protein uses --olive accent. Value: 16px/600. Label: 9px uppercase.</div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="component-card">
+        <div class="component-card-title">Progress Bar</div>
+        <div class="progress-row" style="margin-bottom:10px;">
+          <div class="progress-track"><div class="progress-fill" style="width:50%;"></div></div>
+          <span class="progress-label">2/4 meals</span>
+        </div>
+        <div class="progress-row" style="margin-bottom:0;">
+          <div class="progress-track"><div class="progress-fill" style="width:72%;"></div></div>
+          <span class="progress-label">18/25 items</span>
+        </div>
+        <div style="margin-top:10px; font-size:11px; color:var(--muted);">Track: 3px · bg --border · fill --olive · transition 0.4s</div>
+      </div>
+
+      <!-- Sheet anatomy -->
+      <div class="component-card" style="grid-column: span 2;">
+        <div class="component-card-title">Bottom Sheet (anatomy)</div>
+        <div class="sheet-preview">
+          <div class="sheet-handle-row">
+            <span class="sheet-handle-spacer"></span>
+            <div class="sheet-handle-bar"></div>
+            <span class="sheet-handle-spacer" style="display:flex; justify-content:flex-end;">
+              <div class="sheet-close"><div class="sheet-x"></div></div>
+            </span>
+          </div>
+          <div class="sheet-header">
+            <div class="sheet-badge">Breakfast</div>
+            <div class="sheet-title">Avocado & 3 Poached Eggs</div>
+            <div class="macro-row">
+              <div class="macro-pill"><div class="macro-val">377</div><div class="macro-label">kcal</div></div>
+              <div class="macro-pill"><div class="macro-val protein">20g</div><div class="macro-label">protein</div></div>
+              <div class="macro-pill"><div class="macro-val">8g</div><div class="macro-label">carbs</div></div>
+              <div class="macro-pill"><div class="macro-val">31g</div><div class="macro-label">fat</div></div>
+            </div>
+          </div>
+          <div style="padding:12px 14px; font-size:12px; color:var(--muted); background:var(--surface);">↕ Scrollable ingredient list + add row + save footer…</div>
+        </div>
+        <div style="margin-top:10px; font-size:11px; color:var(--muted);">border-radius: 24px 24px 0 0 · max-height: 92vh · handle + X in flex row (no absolute positioning)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ICON SET -->
+  <div class="section">
+    <div class="section-label">Icon Set (outline only · stroke 1.6px)</div>
+    <div style="display:flex; flex-wrap:wrap; gap:16px;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; font-size:10px; color:var(--muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>house
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; font-size:10px; color:var(--muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>calendar
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; font-size:10px; color:var(--muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>bag
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; font-size:10px; color:var(--muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>bookmark
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; font-size:10px; color:var(--muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>swap
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; font-size:10px; color:var(--muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg>trash
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; font-size:10px; color:var(--muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>x / close
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; font-size:10px; color:var(--muted);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>lightning
+      </div>
+    </div>
+    <div style="margin-top:12px; font-size:12px; color:var(--muted);">All icons: outline only · stroke-width 1.6px (x/close: 2px) · stroke-linecap round · no fill · color inherits from parent</div>
+  </div>
+
+  <!-- TOKEN REFERENCE TABLE -->
+  <div class="section">
+    <div class="section-label">Quick Reference</div>
+    <div class="token-table-wrap">
+      <table class="token-table">
+        <thead>
+          <tr><th>Token</th><th>Usage</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>--ink</td><td>Primary text, headings</td><td>#1A1A1A</td></tr>
+          <tr><td>--ink-soft</td><td>Body text, meal names</td><td>#3D3D3D</td></tr>
+          <tr><td>--muted</td><td>Secondary text, meta, timestamps</td><td>#8A8A8A</td></tr>
+          <tr><td>--muted-light</td><td>Placeholder text, disabled states</td><td>#C5C5C5</td></tr>
+          <tr><td>--olive</td><td>Primary brand, badges, active states, protein accent</td><td>#6B7A5A</td></tr>
+          <tr><td>--olive-light</td><td>Olive borders, icon strokes</td><td>#8A9970</td></tr>
+          <tr><td>--olive-pale</td><td>Badge backgrounds, swap panels, active nav bg</td><td>#E8EDE0</td></tr>
+          <tr><td>--sky</td><td>Category chip active bg</td><td>#B8D4DC</td></tr>
+          <tr><td>--sky-deep</td><td>Shop swap icon, info accents</td><td>#7AAAB8</td></tr>
+          <tr><td>--sand</td><td>Card hover bg, tomorrow carousel cards</td><td>#F5F0E8</td></tr>
+          <tr><td>--sand-deep</td><td>Close button bg, pressed states</td><td>#EDE6D6</td></tr>
+          <tr><td>--surface</td><td>App & sheet background</td><td>#FAFAF7</td></tr>
+          <tr><td>--white</td><td>Card backgrounds, input backgrounds</td><td>#FFFFFF</td></tr>
+          <tr><td>--border</td><td>All card borders, dividers, progress track</td><td>#E5E0D5</td></tr>
+          <tr><td>--success</td><td>Check animation particles</td><td>#7A9B6A</td></tr>
+          <tr><td>--font-serif</td><td>Page titles, sheet titles, day names</td><td>Cormorant Garamond</td></tr>
+          <tr><td>--font-sans</td><td>All UI text, labels, body</td><td>DM Sans</td></tr>
+          <tr><td>--radius</td><td>Large cards, hero card</td><td>16px</td></tr>
+          <tr><td>--radius-sm</td><td>Meal cards, inputs, chips, ingredient rows</td><td>10px</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="figma-note" style="margin-top:16px;">
+      <strong>Figma Setup Summary</strong>
+      1. Create a local Variables collection <code>Nourish/Tokens</code> with all color tokens above.<br/>
+      2. Create Text Styles: <code>Nourish/Display</code>, <code>Nourish/SheetTitle</code>, <code>Nourish/CardDay</code>, <code>Nourish/Body</code>, <code>Nourish/Meta</code>, <code>Nourish/MacroValue</code>, <code>Nourish/Eyebrow</code>, <code>Nourish/Caption</code>.<br/>
+      3. Create Effect Styles: <code>Nourish/Nav/BlurBg</code> = background blur 20px.<br/>
+      4. Frame size: 390 × 844 (iPhone 14) or 430 × 932 (iPhone 14 Plus). Set frame background to <code>--surface</code>.<br/>
+      5. Icon component: 24×24 frame, outline SVG path, <code>currentColor</code> stroke so it inherits from parent.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
