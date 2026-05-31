@@ -1,12 +1,15 @@
 // API route: GET /api/shopping - Get shopping list
-// API route: POST /api/shopping - Check/uncheck item
+// POST /api/shopping - Check/uncheck item
 import { NextRequest, NextResponse } from 'next/server';
-import { getShoppingItems, updateShoppingItem } from '@/lib/db';
+import { initDatabase, getShoppingItems, updateShoppingItem } from '@/lib/db';
 import { SHOPPING_LIST } from '@/lib/meal-data';
 
 export async function GET() {
   try {
-    const items = getShoppingItems();
+    // Initialize DB tables first
+    await initDatabase();
+    
+    const items = await getShoppingItems();
     
     // Create checked map
     const checkedMap: Record<string, boolean> = {};
@@ -30,8 +33,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    await initDatabase();
     
+    const body = await request.json();
     const { itemName, wasChecked } = body;
     
     if (!itemName) {
@@ -41,7 +45,7 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    updateShoppingItem(itemName, wasChecked);
+    await updateShoppingItem(itemName, wasChecked);
     
     return NextResponse.json({ success: true });
   } catch (error) {

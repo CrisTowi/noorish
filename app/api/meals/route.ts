@@ -1,12 +1,13 @@
 // API route: GET /api/meals - Get all meal plan data
-// API route: POST /api/meals - Log a meal as eaten
+// POST /api/meals - Log a meal as eaten
 import { NextRequest, NextResponse } from 'next/server';
-import { addMealLog, getMealLogs } from '@/lib/db';
+import { initDatabase, getMealLogs, addMealLog } from '@/lib/db';
 import { MEAL_PLAN, MealType } from '@/lib/meal-data';
 
 export async function GET() {
   try {
-    // Return the full meal plan data
+    await initDatabase();
+    
     return NextResponse.json({
       success: true,
       data: MEAL_PLAN,
@@ -26,8 +27,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    await initDatabase();
     
+    const body = await request.json();
     const { date, mealType, mealName, proteinGrams, wasEaten } = body;
     
     if (!date || !mealType || !mealName) {
@@ -37,7 +39,7 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const newLog = addMealLog({
+    const newLog = await addMealLog({
       date,
       mealType: mealType as MealType,
       mealName,

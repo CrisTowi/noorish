@@ -1,12 +1,14 @@
 // API route: GET /api/favorites - Get all favorites
-// API route: POST /api/favorites - Add/remove favorite
+// POST /api/favorites - Add/remove favorite
 import { NextRequest, NextResponse } from 'next/server';
-import { getFavorites, addFavorite, removeFavorite } from '@/lib/db';
+import { initDatabase, getFavorites, addFavorite, removeFavorite } from '@/lib/db';
 import { MealType } from '@/lib/meal-data';
 
 export async function GET() {
   try {
-    const allFavorites = getFavorites();
+    await initDatabase();
+    
+    const allFavorites = await getFavorites();
     return NextResponse.json({ success: true, data: allFavorites });
   } catch (error) {
     console.error('Error fetching favorites:', error);
@@ -19,12 +21,13 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    await initDatabase();
     
+    const body = await request.json();
     const { mealName, mealType, proteinGrams, calories, action } = body;
     
     if (action === 'remove') {
-      removeFavorite(mealName);
+      await removeFavorite(mealName);
       return NextResponse.json({ success: true, removed: true });
     }
     
@@ -35,7 +38,7 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    addFavorite({
+    await addFavorite({
       name: mealName,
       mealType: mealType as MealType,
       proteinGrams: proteinGrams || 0,
