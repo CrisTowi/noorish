@@ -1,7 +1,7 @@
 // API route: GET /api/progress - Get meal progress for a date
 // POST /api/progress - Update meal eaten status
 import { NextRequest, NextResponse } from 'next/server';
-import { initDatabase, getMealLogs, updateMealLog } from '@/lib/db';
+import { initDatabase, getMealLogs, addMealLog, updateMealLog } from '@/lib/db';
 import { MealType } from '@/lib/meal-data';
 
 export async function GET(request: NextRequest) {
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     await initDatabase();
     
     const body = await request.json();
-    const { date, mealType, wasEaten } = body;
+    const { date, mealType, mealName, proteinGrams, wasEaten } = body;
     
     if (!date || !mealType) {
       return NextResponse.json(
@@ -37,11 +37,22 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const logs = await getMealLogs(date);
-    const log = logs.find(l => l.mealType === mealType);
+    // Check if log exists for this date and meal type
+    const existingLogs = await getMealLogs(date);
+    const existingLog = existingLogs.find(log => log.mealType === mealType);
     
-    if (log) {
-      await updateMealLog(log.id, wasEaten);
+    if (existingLog) {
+      // Update existing log
+      await updateMealLog(existingLog.id, wasEaten);
+    } else if (wasEaten) {
+      // Create new log only if marking as eaten
+      await addMealLog({
+        date,
+        mealType: mealType as MealType,
+        mealName: mealName || '',
+        proteinGrams: proteinGrams || 0,
+        wasEaten
+      });
     }
     
     return NextResponse.json({ success: true });

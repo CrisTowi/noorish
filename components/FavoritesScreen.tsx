@@ -1,12 +1,80 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Icon } from './Icons';
+import { MealType } from '@/lib/meal-data';
 
-interface FavoritesScreenProps {
-  favorites: Record<string, { name: string; mealType: string; protein: number; calories: number; savedAt: number }>;
+interface FavoriteItem {
+  name: string;
+  mealType: MealType;
+  protein: number;
+  calories: number;
+  savedAt: number;
 }
 
-export function FavoritesScreen({ favorites }: FavoritesScreenProps) {
+interface FavoritesScreenProps {
+  favorites: Record<string, FavoriteItem>;
+  setFavorites: (favorites: Record<string, FavoriteItem>) => void;
+}
+
+export function FavoritesScreen({ favorites, setFavorites }: FavoritesScreenProps) {
+  const [loading, setLoading] = useState(true);
+
+  // Load favorites from API on mount
+  useEffect(() => {
+    async function loadFavorites() {
+      try {
+        const response = await fetch('/api/favorites');
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+          // Convert array to record
+          const favoritesMap: Record<string, FavoriteItem> = {};
+          data.data.forEach((fav: any) => {
+            const key = `${fav.mealType}::${fav.name}`;
+            favoritesMap[key] = {
+              name: fav.name,
+              mealType: fav.mealType,
+              protein: fav.proteinGrams || 0,
+              calories: fav.calories || 0,
+              savedAt: fav.savedAt || Date.now(),
+            };
+          });
+          setFavorites(favoritesMap);
+        }
+      } catch (e) {
+        console.error('Failed to load favorites:', e);
+      }
+      setLoading(false);
+    }
+    
+    loadFavorites();
+  }, [setFavorites]);
+
+  async function removeFavorite(name: string) {
+    const key = Object.keys(favorites).find(k => k.includes(`::${name}`));
+    
+    if (!key) return;
+    
+    // Optimistic update
+    const newFavorites = { ...favorites };
+    delete newFavorites[key];
+    setFavorites(newFavorites);
+    
+    // Save to API
+    try {
+      await fetch('/api/favorites', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mealName: name, action: 'remove' })
+      });
+    } catch (e) {
+      console.error('Failed to remove favorite:', e);
+      // Revert on error
+      setFavorites(favorites);
+    }
+  }
+
   const favoritesList = Object.values(favorites);
 
   return (
@@ -17,7 +85,9 @@ export function FavoritesScreen({ favorites }: FavoritesScreenProps) {
         <p className="page-subtitle">{favoritesList.length} saved meals</p>
       </div>
 
-      {favoritesList.length === 0 ? (
+      {loading ? (
+        <div style={{ padding: 40, textAlign: 'center', color: 'var(--muted)' }}>Loading...</div>
+      ) : favoritesList.length === 0 ? (
         <div className="fav-empty">
           <div className="fav-empty-icon">
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -37,7 +107,11 @@ export function FavoritesScreen({ favorites }: FavoritesScreenProps) {
                 <div className="fav-card-name">{fav.name}</div>
                 <div className="fav-card-meta">{fav.protein}g protein · {fav.calories} kcal</div>
               </div>
-              <button className="meal-swap-btn" aria-label="Remove from favorites">
+              <button 
+                className="meal-swap-btn" 
+                aria-label="Remove from favorites"
+                onClick={() => removeFavorite(fav.name)}
+              >
                 <Icon name="trash" size={14} />
               </button>
             </div>

@@ -22,6 +22,11 @@ function Logo() {
 
 export default function Home() {
   const [activeNav, setActiveNav] = useState<NavItem>('today');
+  
+  // Get today's date
+  const today = new Date().toISOString().split('T')[0];
+  
+  // Initialize state
   const [eaten, setEaten] = useState<Record<MealType, boolean>>({
     breakfast: false,
     lunch: false,
@@ -32,9 +37,39 @@ export default function Home() {
   const [favorites, setFavorites] = useState<Record<string, { name: string; mealType: MealType; protein: number; calories: number; savedAt: number }>>({});
   const [mounted, setMounted] = useState(false);
 
+  // Load saved progress from database on mount
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    async function loadProgress() {
+      try {
+        const response = await fetch(`/api/progress?date=${today}`);
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+          // Update eaten state based on saved data
+          const savedEaten: Record<MealType, boolean> = {
+            breakfast: false,
+            lunch: false,
+            snack: false,
+            dinner: false,
+          };
+          
+          data.data.forEach((log: any) => {
+            if (log.wasEaten && log.mealType) {
+              savedEaten[log.mealType as MealType] = true;
+            }
+          });
+          
+          setEaten(savedEaten);
+        }
+      } catch (e) {
+        console.error('Failed to load progress:', e);
+      }
+      
+      setMounted(true);
+    }
+    
+    loadProgress();
+  }, [today]);
 
   if (!mounted) {
     return (
@@ -69,7 +104,7 @@ export default function Home() {
       )}
       {activeNav === 'plan' && <PlanScreen />}
       {activeNav === 'shopping' && <ShoppingScreen />}
-      {activeNav === 'favorites' && <FavoritesScreen favorites={favorites} />}
+      {activeNav === 'favorites' && <FavoritesScreen favorites={favorites} setFavorites={setFavorites} />}
 
       {/* Bottom navigation */}
       <BottomNavigation active={activeNav} onNavigate={setActiveNav} />

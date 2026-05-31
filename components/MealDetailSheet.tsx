@@ -1,4 +1,6 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { Icon } from './Icons';
 import { MEAL_LABELS, getIngredientSwaps, getDefaultIngredients, MealType } from '@/lib/meal-data';
 
@@ -25,7 +27,7 @@ interface MealDetailSheetProps {
   meal: { name: string; protein: number };
   mealType: MealType;
   favorites: Record<string, FavoriteItem>;
-  setFavorites: Dispatch<SetStateAction<Record<string, FavoriteItem>>>;
+  setFavorites: (favorites: Record<string, FavoriteItem>) => void;
   onClose: () => void;
   onSave?: (data: { meal: { name: string; protein: number }; mealType: MealType; ingredients: Ingredient[]; totals: { cal: number; protein: number; carbs: number; fat: number } }) => void;
 }
@@ -48,22 +50,53 @@ export function MealDetailSheet({ meal, mealType, favorites, setFavorites, onClo
     { cal: 0, protein: 0, carbs: 0, fat: 0 }
   );
 
-  function toggleFav() {
-    setFavorites((prev) => {
-      const next = { ...prev };
-      if (next[favKey]) {
-        delete next[favKey];
-      } else {
-        next[favKey] = {
+  async function toggleFav() {
+    const newFavKey = favKey;
+    
+    if (isFav) {
+      // Remove from favorites
+      const newFavorites = { ...favorites };
+      delete newFavorites[newFavKey];
+      setFavorites(newFavorites);
+      
+      try {
+        await fetch('/api/favorites', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mealName: meal.name, action: 'remove' })
+        });
+      } catch (e) {
+        console.error('Failed to remove favorite:', e);
+      }
+    } else {
+      // Add to favorites
+      const newFavorites = {
+        ...favorites,
+        [newFavKey]: {
           name: meal.name,
           mealType,
           protein: totals.protein,
           calories: totals.cal,
           savedAt: Date.now(),
-        };
+        }
+      };
+      setFavorites(newFavorites);
+      
+      try {
+        await fetch('/api/favorites', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mealName: meal.name,
+            mealType,
+            proteinGrams: totals.protein,
+            calories: totals.cal
+          })
+        });
+      } catch (e) {
+        console.error('Failed to add favorite:', e);
       }
-      return next;
-    });
+    }
   }
 
   function deleteIngredient(id: string) {

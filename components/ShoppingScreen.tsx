@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icon } from './Icons';
 import { SHOPPING_LIST, ShoppingCategory } from '@/lib/meal-data';
 
@@ -9,6 +9,7 @@ type ShoppingCategoryKey = keyof ShoppingCategory;
 export function ShoppingScreen() {
   const [activeCategory, setActiveCategory] = useState<ShoppingCategoryKey>('proteins');
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [loading, setLoading] = useState(true);
 
   const categories: ShoppingCategoryKey[] = ['proteins', 'produce', 'pantry'];
   
@@ -18,8 +19,43 @@ export function ShoppingScreen() {
     pantry: 'Pantry',
   };
 
-  function toggleItem(itemName: string) {
-    setCheckedItems(prev => ({ ...prev, [itemName]: !prev[itemName] }));
+  // Load checked items from API on mount
+  useEffect(() => {
+    async function loadShoppingList() {
+      try {
+        const response = await fetch('/api/shopping');
+        const data = await response.json();
+        
+        if (data.success && data.checked) {
+          setCheckedItems(data.checked);
+        }
+      } catch (e) {
+        console.error('Failed to load shopping list:', e);
+      }
+      setLoading(false);
+    }
+    
+    loadShoppingList();
+  }, []);
+
+  async function toggleItem(itemName: string) {
+    const newChecked = !checkedItems[itemName];
+    
+    // Optimistic update
+    setCheckedItems(prev => ({ ...prev, [itemName]: newChecked }));
+    
+    // Save to API
+    try {
+      await fetch('/api/shopping', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemName, wasChecked: newChecked })
+      });
+    } catch (e) {
+      console.error('Failed to save shopping item:', e);
+      // Revert on error
+      setCheckedItems(prev => ({ ...prev, [itemName]: !newChecked }));
+    }
   }
 
   const currentItems = SHOPPING_LIST[activeCategory];
@@ -55,7 +91,7 @@ export function ShoppingScreen() {
           <div
             key={index}
             className="shop-item"
-            onClick={() => toggleItem(item.item)}
+            onClick={() => !loading && toggleItem(item.item)}
           >
             <div className={`shop-check ${checkedItems[item.item] ? 'checked' : ''}`}>
               {checkedItems[item.item] && '✓'}

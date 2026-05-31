@@ -36,18 +36,58 @@ export function TodayScreen({ eaten, setEaten, mealOverrides, setMealOverrides, 
   const [detailSheet, setDetailSheet] = useState<{ meal: { name: string; protein: number }; mealType: MealType } | null>(null);
   const [animating, setAnimating] = useState<Record<MealType, boolean>>({} as Record<MealType, boolean>);
 
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
+
   function getEffectiveMeal(w: string, d: number, type: MealType) {
     return mealOverrides[`${w}-${d}-${type}`] || MEAL_PLAN[w].days[d].meals[type];
   }
 
-  function toggleEaten(type: MealType) {
+  async function toggleEaten(type: MealType) {
+    const meal = getEffectiveMeal(week, dayIdx, type);
+    
     if (!eaten[type]) {
+      // Mark as eaten - save to database
       setAnimating((prev) => ({ ...prev, [type]: true }));
+      
+      try {
+        await fetch('/api/progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            date: today,
+            mealType: type,
+            mealName: meal.name,
+            proteinGrams: meal.protein,
+            wasEaten: true
+          })
+        });
+      } catch (e) {
+        console.error('Failed to save meal:', e);
+      }
+      
       setTimeout(() => {
         setEaten((prev) => ({ ...prev, [type]: true }));
         setAnimating((prev) => ({ ...prev, [type]: false }));
       }, 480);
     } else {
+      // Unmark - update database
+      try {
+        await fetch('/api/progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            date: today,
+            mealType: type,
+            mealName: meal.name,
+            proteinGrams: meal.protein,
+            wasEaten: false
+          })
+        });
+      } catch (e) {
+        console.error('Failed to update meal:', e);
+      }
+      
       setEaten((prev) => ({ ...prev, [type]: false }));
     }
   }
