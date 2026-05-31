@@ -1,0 +1,197 @@
+/* TodayScreen Component Styles */
+
+/* Page header */
+.pageHeader { padding: 12px 20px 20px; }
+.pageEyebrow {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--olive); margin-bottom: 4px;
+}
+.pageTitle {
+  font-family: var(--font-serif);
+  font-size: 34px; font-weight: 300;
+  line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.pageSubtitle { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* Progress bar */
+.progressRow { display: flex; align-items: center; gap: 10px; padding: 0 20px; margin-bottom: 16px; }
+.progressTrack { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.progressFill  { height: 100%; background: var(--olive); border-radius: 2px; transition: width 0.4s ease; }
+.progressLabel { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+/* Today hero */
+.todayHero {
+  margin: 0 20px 16px;
+  background: var(--olive);
+  border-radius: var(--radius);
+  padding: 22px;
+  color: white;
+  overflow: hidden;
+  position: relative;
+}
+.todayHero::before {
+  content: '';
+  position: absolute; top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.todayHeroDate { font-size: 11px; opacity: 0.65; letter-spacing: 0.1em; text-transform: uppercase; }
+.todayHeroDay    { font-family: var(--font-serif); font-size: 28px; font-weight: 300; margin: 4px 0 14px; }
+.todayHeroMeta   { display: flex; align-items: center; gap: 10px; }
+.todayHeroPill   { background: rgba(255,255,255,0.18); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 500; }
+.todayHeroSub    { font-size: 13px; opacity: 0.75; }
+
+/* Meal list */
+.mealList { padding: 0 20px; }
+.sectionLabel {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+
+.mealCard {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 14px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  transition: opacity 0.2s;
+}
+.mealCardEaten { opacity: 0.5; }
+
+/* Check circle */
+.mealCheck {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--muted-light);
+  background: none;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: visible;
+  transition: border-color 0.2s;
+}
+.mealCheckDone { background: var(--olive); border-color: var(--olive); }
+
+@keyframes checkFill {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.22); }
+  65%  { transform: scale(0.9); }
+  85%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+@keyframes checkmarkDraw {
+  from { stroke-dashoffset: 20; opacity: 0; }
+  to   { stroke-dashoffset: 0;  opacity: 1; }
+}
+@keyframes ringBurst {
+  from { transform: scale(0.6); opacity: 0.7; }
+  to   { transform: scale(2.2); opacity: 0; }
+}
+@keyframes particle {
+  from { transform: translate(0,0) scale(1); opacity: 1; }
+  to   { transform: translate(var(--px), var(--py)) scale(0); opacity: 0; }
+}
+.mealCheckAnimating { animation: checkFill 0.45s cubic-bezier(.36,.07,.19,.97) forwards; border-color: var(--olive); background: var(--olive); }
+.checkSvg   { width: 13px; height: 10px; position: absolute; overflow: visible; }
+.checkPath  { fill: none; stroke: white; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 20; stroke-dashoffset: 20; }
+.mealCheckAnimating .checkPath,
+.mealCheckDone .checkPath { animation: checkmarkDraw 0.35s ease 0.1s forwards; }
+.checkRing  { position: absolute; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--olive); pointer-events: none; opacity: 0; }
+.mealCheckAnimating .checkRing { animation: ringBurst 0.5s ease-out 0.05s forwards; }
+.checkParticles { position: absolute; width: 0; height: 0; pointer-events: none; }
+.checkParticle  { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--olive); opacity: 0; top: -2px; left: -2px; }
+.mealCheckAnimating .checkParticle { animation: particle 0.5s ease-out 0.1s forwards; }
+.checkParticle:nth-child(1) { --px: -14px; --py: -12px; }
+.checkParticle:nth-child(2) { --px:  14px; --py: -12px; background: var(--olive-light); }
+.checkParticle:nth-child(3) { --px: -16px; --py:   4px; background: var(--sky); }
+.checkParticle:nth-child(4) { --px:  16px; --py:   4px; }
+.checkParticle:nth-child(5) { --px:  -6px; --py:  15px; background: var(--olive-light); }
+.checkParticle:nth-child(6) { --px:   6px; --py:  15px; background: var(--sky); }
+
+.mealCardBody { flex: 1; min-width: 0; cursor: pointer; }
+.mealTypeBadge {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--olive); margin-bottom: 2px;
+}
+.mealName { font-size: 14px; color: var(--ink-soft); line-height: 1.3; }
+.mealMeta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.mealSwapBtn {
+  width: 30px; height: 30px;
+  background: none; border: 1.5px solid var(--border);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+.mealSwapBtn:active { background: var(--sand); border-color: var(--olive); }
+
+/* Tomorrow carousel */
+.carouselScroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+  padding-left: 20px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.carouselScroll::-webkit-scrollbar { display: none; }
+.carouselTrack { display: flex; gap: 10px; width: max-content; padding-right: 20px; }
+.carouselCard {
+  width: 72vw; max-width: 280px; min-width: 200px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  background: var(--sand);
+  border: 1px solid var(--sand-deep);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  cursor: pointer;
+}
+.carouselCardTop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+
+/* Swap modal */
+.modalOverlay {
+  position: fixed; inset: 0;
+  background: var(--overlay-modal);
+  z-index: 200;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.modalSheet {
+  background: var(--surface);
+  width: 100%; max-width: 430px;
+  border-radius: 24px 24px 0 0;
+  padding: 20px 22px calc(20px + var(--safe-bottom));
+  animation: sheetUp 0.28s cubic-bezier(.22,1,.36,1);
+}
+.modalHandle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 16px; }
+.modalTitle  { font-family: var(--font-serif); font-size: 22px; font-weight: 400; margin-bottom: 4px; }
+.modalSub    { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+.swapOption  { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.swapOption:last-child { border-bottom: none; }
+.swapDot     { width: 7px; height: 7px; border-radius: 50%; background: var(--sky-deep); flex-shrink: 0; }
+.swapOptionInfo { flex: 1; }
+.swapOptionDay  { font-size: 10px; color: var(--olive); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.swapOptionName { font-size: 14px; color: var(--ink-soft); margin-top: 1px; }
+.swapOptionProtein { font-size: 11px; color: var(--muted); }
+
+/* Utility */
+.mt1 { margin-top: var(--space-1); }
+.h5 { height: 20px; }
+.px5 { padding-left: var(--space-5); padding-right: var(--space-5); }
+.mb3 { margin-bottom: var(--space-3); }
+.flexRowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.textSwipeHint {
+  font-size: 10px;
+  color: var(--muted-light);
+}

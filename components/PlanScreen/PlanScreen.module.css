@@ -1,0 +1,80 @@
+/* PlanScreen Component Styles */
+
+/* Week toggle */
+.weekToggle { display: flex; gap: 8px; padding: 0 20px; margin-bottom: 14px; }
+.weekBtn {
+  flex: 1; padding: 10px;
+  border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+  background: none; font-family: var(--font-sans);
+  font-size: 13px; font-weight: 500; color: var(--muted);
+  cursor: pointer; transition: all 0.2s;
+}
+.weekBtnActive { background: var(--olive); border-color: var(--olive); color: white; }
+
+/* Day scroll */
+.dayScrollWrap { overflow-x: auto; padding: 0 20px 10px; }
+.dayScrollWrap::-webkit-scrollbar { display: none; }
+.dayScroll { display: flex; gap: 6px; width: max-content; }
+.dayPill {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 9px 13px; border-radius: 30px;
+  border: 1.5px solid var(--border); background: none;
+  cursor: pointer; transition: all 0.2s; font-family: var(--font-sans);
+  min-width: 50px;
+}
+.dpLabel { font-size: 10px; color: var(--muted); font-weight: 500; letter-spacing: 0.05em; }
+.dpNum   { font-size: 15px; font-weight: 500; color: var(--ink); margin-top: 1px; }
+.dayPillActive { background: var(--ink); border-color: var(--ink); }
+.dayPillActive .dpLabel { color: rgba(255,255,255,0.5); }
+.dayPillActive .dpNum   { color: white; }
+
+/* Plan card */
+.planCard { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin: 0 20px; }
+.planCardHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 18px; border-bottom: 1px solid var(--border);
+}
+.planCardDay  { font-family: var(--font-serif); font-size: 20px; font-weight: 400; }
+.planCardMeta { font-size: 11px; color: var(--muted); }
+.planMealRow  { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--border); }
+.planMealRow:last-child { border-bottom: none; }
+.planMealType { font-size: 10px; color: var(--olive); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; min-width: 62px; }
+.planMealName { flex: 1; font-size: 13px; color: var(--ink-soft); }
+.planMealProtein { font-size: 11px; color: var(--muted-light); background: var(--sand); padding: 3px 8px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+
+/* Prep section */
+.prepBtn {
+  display: flex; align-items: center; gap: 10px;
+  width: calc(100% - 40px); margin: 14px 20px 0;
+  background: var(--sand); border: 1.5px solid var(--sand-deep);
+  border-radius: var(--radius-sm); padding: 13px 16px;
+  font-family: var(--font-sans); font-size: 14px; font-weight: 500; color: var(--ink-soft);
+  cursor: pointer; transition: background 0.2s;
+}
+.prepBtn:active { background: var(--sand-deep); }
+.prepBtnLabel { flex: 1; text-align: left; }
+.prepBadge { background: var(--olive-pale); color: var(--olive); font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+
+.prepStep {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.15s;
+}
+.prepStep:last-child { border-bottom: none; }
+.prepStep:active { background: var(--sand); }
+
+.prepStepNum {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--olive-pale); color: var(--olive);
+  font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.prepStepNumDone { background: var(--olive); color: white; }
+
+.prepStepTitle { font-size: 11px; color: var(--olive); font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 2px; }
+.prepStepDesc  { font-size: 13px; color: var(--ink-soft); line-height: 1.4; }
+.prepStepTitleDone { text-decoration: line-through; color: var(--muted); }
+.prepStepDescDone { text-decoration: line-through; color: var(--muted); }
+
+/* Utility */
+.my5 { margin: var(--space-5) 0; }

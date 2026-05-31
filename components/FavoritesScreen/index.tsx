@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Icon } from './Icons';
+import { Icon } from '../Icons';
 import { MealType } from '@/lib/meal-data';
+import styles from './FavoritesScreen.module.css';
 
 interface FavoriteItem {
   name: string;
@@ -10,6 +11,14 @@ interface FavoriteItem {
   protein: number;
   calories: number;
   savedAt: number;
+}
+
+interface FavoriteApiResponse {
+  mealType: MealType;
+  name: string;
+  proteinGrams?: number;
+  calories?: number;
+  savedAt?: number;
 }
 
 interface FavoritesScreenProps {
@@ -30,7 +39,7 @@ export function FavoritesScreen({ favorites, setFavorites }: FavoritesScreenProp
         if (data.success && data.data) {
           // Convert array to record
           const favoritesMap: Record<string, FavoriteItem> = {};
-          data.data.forEach((fav: any) => {
+          data.data.forEach((fav: FavoriteApiResponse) => {
             const key = `${fav.mealType}::${fav.name}`;
             favoritesMap[key] = {
               name: fav.name,
@@ -86,17 +95,17 @@ export function FavoritesScreen({ favorites, setFavorites }: FavoritesScreenProp
       </div>
 
       {loading ? (
-        <div className="loading-center">
-          <span className="loading-text">Loading...</span>
+        <div className={styles.loadingCenter}>
+          <span className={styles.loadingText}>Loading...</span>
         </div>
       ) : favoritesList.length === 0 ? (
-        <div className="fav-empty">
-          <div className="fav-empty-icon">
+        <div className={styles.favEmpty}>
+          <div className={styles.favEmptyIcon}>
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
             </svg>
           </div>
-          <p className="fav-empty-text">
+          <p className={styles.favEmptyText}>
             No saved meals yet.<br />
             Tap the bookmark icon on any meal to save it here.
           </p>
@@ -104,10 +113,10 @@ export function FavoritesScreen({ favorites, setFavorites }: FavoritesScreenProp
       ) : (
         <div className="card">
           {favoritesList.map((fav, index) => (
-            <div key={index} className={`fav-card${index < favoritesList.length - 1 ? ' fav-card-bordered' : ''}`}>
-              <div className="fav-card-info">
-                <div className="fav-card-name">{fav.name}</div>
-                <div className="fav-card-meta">{fav.protein}g protein · {fav.calories} kcal</div>
+            <div key={index} className={`${styles.favCard} ${index < favoritesList.length - 1 ? styles.favCardBordered : ''}`}>
+              <div className={styles.favCardInfo}>
+                <div className={styles.favCardName}>{fav.name}</div>
+                <div className={styles.favCardMeta}>{fav.protein}g protein · {fav.calories} kcal</div>
               </div>
               <button 
                 className="meal-swap-btn" 

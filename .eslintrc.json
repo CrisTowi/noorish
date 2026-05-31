@@ -1,0 +1,22 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "prefer-const": "error",
+    "no-var": "error",
+    "eqeqeq": ["error", "always"],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "import/order": ["error", {
+      "groups": [["external", "builtin"], "internal", "parent", "sibling", "index"],
+      "newlines-between": "always",
+      "alphabetize": { "order": "asc" }
+    }],
+    "import/no-duplicates": "error",
+    "jsx-a11y/alt-text": "warn",
+    "jsx-a11y/anchor-has-content": "warn",
+    "jsx-a11y/aria-props": "warn",
+    "jsx-a11y/no-noninteractive-tabindex": "warn"
+  }
+}

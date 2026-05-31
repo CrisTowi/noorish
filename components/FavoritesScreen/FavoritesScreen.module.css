@@ -1,0 +1,21 @@
+/* FavoritesScreen Component Styles */
+
+.favEmpty { display: flex; flex-direction: column; align-items: center; padding: 60px 40px; text-align: center; gap: 12px; }
+.favEmptyIcon { opacity: 0.25; }
+.favEmptyText { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+.favCard { display: flex; align-items: center; gap: 14px; padding: 15px 16px; }
+.favCardInfo { flex: 1; min-width: 0; }
+.favCardName { font-size: 14px; color: var(--ink-soft); }
+.favCardMeta { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.favCardBordered { border-bottom: 1px solid var(--border); }
+
+/* Loading */
+.loadingCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 60vh;
+}
+.loadingText { color: var(--muted); }

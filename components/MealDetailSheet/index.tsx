@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Icon } from './Icons';
+import { Icon } from '../Icons';
 import { MEAL_LABELS, getIngredientSwaps, getDefaultIngredients, MealType } from '@/lib/meal-data';
+import styles from './MealDetailSheet.module.css';
 
 interface Ingredient {
   id: string;
@@ -121,71 +122,71 @@ export function MealDetailSheet({ meal, mealType, favorites, setFavorites, onClo
   }
 
   return (
-    <div className="sheet-overlay">
-      <div className="sheet" onClick={e => e.stopPropagation()}>
+    <div className={styles.sheetOverlay}>
+      <div className={styles.sheet} onClick={e => e.stopPropagation()}>
         {/* Handle row */}
-        <div className="sheet-handle-row">
-          <span className="sheet-handle-spacer" />
-          <div className="sheet-handle-bar" />
-          <span className="sheet-handle-spacer sheet-handle-spacer--end">
-            <button className="sheet-close" onClick={onClose} aria-label="Close">
+        <div className={styles.sheetHandleRow}>
+          <span className={styles.sheetHandleSpacer} />
+          <div className={styles.sheetHandleBar} />
+          <span className={styles.sheetHandleSpacerEnd}>
+            <button className={styles.sheetClose} onClick={onClose} aria-label="Close">
               <Icon name="x" size={14} />
             </button>
           </span>
         </div>
 
         {/* Header */}
-        <header className="sheet-header">
-          <div className="sheet-badge">{MEAL_LABELS[mealType]}</div>
-          <div className="sheet-title-row">
-            <h2 className="sheet-title">{meal.name}</h2>
-            <button className={`sheet-fav-btn${isFav ? ' active' : ''}`} onClick={toggleFav} aria-label="Save to favourites">
+        <header className={styles.sheetHeader}>
+          <div className={styles.sheetBadge}>{MEAL_LABELS[mealType]}</div>
+          <div className={styles.sheetTitleRow}>
+            <h2 className={styles.sheetTitle}>{meal.name}</h2>
+            <button className={`${styles.sheetFavBtn} ${isFav ? styles.sheetFavBtnActive : ''}`} onClick={toggleFav} aria-label="Save to favourites">
               <Icon name="bookmark" size={15} />
             </button>
           </div>
-          <div className="sheet-macros">
-            <div className="macro-pill">
-              <div className="macro-val">{totals.cal}</div>
-              <div className="macro-label">kcal</div>
+          <div className={styles.sheetMacros}>
+            <div className={styles.macroPill}>
+              <div className={styles.macroVal}>{totals.cal}</div>
+              <div className={styles.macroLabel}>kcal</div>
             </div>
-            <div className="macro-pill">
-              <div className="macro-val protein">{totals.protein}g</div>
-              <div className="macro-label">protein</div>
+            <div className={styles.macroPill}>
+              <div className={`${styles.macroVal} ${styles.macroValProtein}`}>{totals.protein}g</div>
+              <div className={styles.macroLabel}>protein</div>
             </div>
-            <div className="macro-pill">
-              <div className="macro-val">{totals.carbs}g</div>
-              <div className="macro-label">carbs</div>
+            <div className={styles.macroPill}>
+              <div className={styles.macroVal}>{totals.carbs}g</div>
+              <div className={styles.macroLabel}>carbs</div>
             </div>
-            <div className="macro-pill">
-              <div className="macro-val">{totals.fat}g</div>
-              <div className="macro-label">fat</div>
+            <div className={styles.macroPill}>
+              <div className={styles.macroVal}>{totals.fat}g</div>
+              <div className={styles.macroLabel}>fat</div>
             </div>
           </div>
         </header>
 
         {/* Body */}
-        <div className="sheet-body">
-          <p className="sheet-section-label">Ingredients</p>
+        <div className={styles.sheetBody}>
+          <p className={styles.sheetSectionLabel}>Ingredients</p>
           {ingredients.map(ing => (
             <div key={ing.id}>
-              <div className="ingredient-row">
-                <div className="ingredient-info">
-                  <div className="ingredient-name">{ing.name}</div>
-                  <div className="ingredient-qty">
+              <div className={styles.ingredientRow}>
+                <div className={styles.ingredientInfo}>
+                  <div className={styles.ingredientName}>{ing.name}</div>
+                  <div className={styles.ingredientQty}>
                     {ing.qty} {ing.unit}
                   </div>
                 </div>
-                <div className="ingredient-cal">{ing.calories} kcal</div>
-                <div className="ingredient-actions">
+                <div className={styles.ingredientCal}>{ing.calories} kcal</div>
+                <div className={styles.ingredientActions}>
                   <button
-                    className="ingredient-btn"
+                    className={styles.ingredientBtn}
                     onClick={() => setSwapTarget(swapTarget === ing.id ? null : ing.id)}
                     aria-label="Swap ingredient"
                   >
                     <Icon name="swap" size={13} />
                   </button>
                   <button
-                    className="ingredient-btn del"
+                    className={`${styles.ingredientBtn} ${styles.ingredientBtnDel}`}
                     onClick={() => deleteIngredient(ing.id)}
                     aria-label="Remove ingredient"
                   >
@@ -194,23 +195,23 @@ export function MealDetailSheet({ meal, mealType, favorites, setFavorites, onClo
                 </div>
               </div>
               {swapTarget === ing.id && (
-                <div className="swap-panel">
-                  <div className="swap-panel-title">Swaps for {ing.name}</div>
+                <div className={styles.swapPanel}>
+                  <div className={styles.swapPanelTitle}>Swaps for {ing.name}</div>
                   {getIngredientSwaps(ing.name).map((s, i) => (
                     <div
                       key={i}
-                      className="swap-panel-option"
+                      className={styles.swapPanelOption}
                       onClick={() => {
                         setIngredients(prev => prev.map(x => (x.id === ing.id ? { ...x, name: s } : x)));
                         setSwapTarget(null);
                         setSaved(false);
                       }}
                     >
-                      <div className="swap-panel-dot" />
-                      <div className="swap-panel-text">{s}</div>
+                      <div className={styles.swapPanelDot} />
+                      <div className={styles.swapPanelText}>{s}</div>
                     </div>
                   ))}
-                  <div className="swap-panel-cancel" onClick={() => setSwapTarget(null)}>
+                  <div className={styles.swapPanelCancel} onClick={() => setSwapTarget(null)}>
                     Cancel
                   </div>
                 </div>
@@ -220,22 +221,22 @@ export function MealDetailSheet({ meal, mealType, favorites, setFavorites, onClo
         </div>
 
         {/* Add ingredient */}
-        <div className="sheet-add-row">
+        <div className={styles.sheetAddRow}>
           <input
-            className="sheet-add-input"
+            className={styles.sheetAddInput}
             placeholder="Add ingredient…"
             value={addText}
             onChange={e => setAddText(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && addIngredient()}
           />
-          <button className="sheet-add-btn" onClick={addIngredient}>
+          <button className={styles.sheetAddBtn} onClick={addIngredient}>
             Add
           </button>
         </div>
 
         {/* Footer */}
-        <footer className="sheet-footer">
-          <button className={`sheet-save-btn${saved ? ' saved' : ''}`} onClick={handleSave}>
+        <footer className={styles.sheetFooter}>
+          <button className={`${styles.sheetSaveBtn} ${saved ? styles.sheetSaveBtnSaved : ''}`} onClick={handleSave}>
             {saved ? 'Saved ✓' : 'Save changes'}
           </button>
         </footer>

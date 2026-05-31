@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { Icon } from './Icons';
+import { Icon } from '../Icons';
 import { MEAL_LABELS, MEAL_TIMES, MEAL_PLAN, getTotalProtein, getAllDays, MealType } from '@/lib/meal-data';
-import { MealDetailSheet } from './MealDetailSheet';
+import { MealDetailSheet } from '../MealDetailSheet';
+import styles from './TodayScreen.module.css';
 
 interface FavoriteItem {
   name: string;
@@ -117,62 +118,62 @@ export function TodayScreen({ eaten, setEaten, mealOverrides, setMealOverrides, 
 
   return (
     <main className="screen">
-      <div className="page-header">
-        <p className="page-eyebrow">Today · {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</p>
-        <h1 className="page-title">Your Day</h1>
-        <p className="page-subtitle">120g protein goal · Fat loss protocol</p>
+      <div className={styles.pageHeader}>
+        <p className={styles.pageEyebrow}>Today · {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</p>
+        <h1 className={styles.pageTitle}>Your Day</h1>
+        <p className={styles.pageSubtitle}>120g protein goal · Fat loss protocol</p>
       </div>
 
       {/* Hero */}
-      <div className="today-hero">
-        <div className="today-hero-date">{dateStr}</div>
-        <div className="today-hero-day">{todayData.full}</div>
-        <div className="today-hero-meta">
-          <span className="today-hero-pill">{eatenCount * 27}g eaten</span>
-          <span className="today-hero-sub">of {getTotalProtein(todayData)}g protein</span>
+      <div className={styles.todayHero}>
+        <div className={styles.todayHeroDate}>{dateStr}</div>
+        <div className={styles.todayHeroDay}>{todayData.full}</div>
+        <div className={styles.todayHeroMeta}>
+          <span className={styles.todayHeroPill}>{eatenCount * 27}g eaten</span>
+          <span className={styles.todayHeroSub}>of {getTotalProtein(todayData)}g protein</span>
         </div>
       </div>
 
       {/* Progress */}
-      <div className="progress-row">
-        <div className="progress-track">
-          <div className="progress-fill" style={{ width: `${(eatenCount / 4) * 100}%` }} />
+      <div className={styles.progressRow}>
+        <div className={styles.progressTrack}>
+          <div className={styles.progressFill} style={{ width: `${(eatenCount / 4) * 100}%` }} />
         </div>
-        <span className="progress-label">{eatenCount}/4 meals</span>
+        <span className={styles.progressLabel}>{eatenCount}/4 meals</span>
       </div>
 
       {/* Today meals */}
-      <div className="meal-list">
-        <p className="section-label">Today's meals</p>
+      <div className={styles.mealList}>
+        <p className={styles.sectionLabel}>Today&apos;s meals</p>
         {(Object.keys(MEAL_LABELS) as MealType[]).map((type) => {
           const meal = getEffectiveMeal(week, dayIdx, type);
           const isDone = !!eaten[type];
           const isAnim = !!animating[type];
 
           return (
-            <div key={type} className={`meal-card${isDone ? ' eaten' : ''}`}>
+            <div key={type} className={`${styles.mealCard} ${isDone ? styles.mealCardEaten : ''}`}>
               <button
-                className={`meal-check${isAnim ? ' meal-check--animating' : ''}${isDone ? ' meal-check--done' : ''}`}
+                className={`${styles.mealCheck} ${isAnim ? styles.mealCheckAnimating : ''} ${isDone ? styles.mealCheckDone : ''}`}
                 onClick={() => toggleEaten(type)}
                 aria-label={`Mark ${MEAL_LABELS[type]} as eaten`}
               >
-                <span className="check-ring" />
-                <span className="check-particles">
-                  {[1, 2, 3, 4, 5, 6].map((n) => <span key={n} className="check-particle" />)}
+                <span className={styles.checkRing} />
+                <span className={styles.checkParticles}>
+                  {[1, 2, 3, 4, 5, 6].map((n) => <span key={n} className={styles.checkParticle} />)}
                 </span>
                 {(isDone || isAnim) && (
-                  <svg className="check-svg" viewBox="0 0 13 10">
-                    <path className="check-path" d="M1.5 5L5 8.5L11.5 1.5" />
+                  <svg className={styles.checkSvg} viewBox="0 0 13 10">
+                    <path className={styles.checkPath} d="M1.5 5L5 8.5L11.5 1.5" />
                   </svg>
                 )}
               </button>
-              <div className="meal-card-body" onClick={() => setDetailSheet({ meal, mealType: type })}>
-                <div className="meal-type-badge">{MEAL_LABELS[type]}</div>
-                <div className="meal-name">{meal.name}</div>
-                <div className="meal-meta">{MEAL_TIMES[type]} · ~{meal.protein}g protein</div>
+              <div className={styles.mealCardBody} onClick={() => setDetailSheet({ meal, mealType: type })}>
+                <div className={styles.mealTypeBadge}>{MEAL_LABELS[type]}</div>
+                <div className={styles.mealName}>{meal.name}</div>
+                <div className={styles.mealMeta}>{MEAL_TIMES[type]} · ~{meal.protein}g protein</div>
               </div>
               {!isDone && !isAnim && (
-                <button className="meal-swap-btn" onClick={(e) => openSwap(type, true, e)} aria-label="Swap meal">
+                <button className={styles.mealSwapBtn} onClick={(e) => openSwap(type, true, e)} aria-label="Swap meal">
                   <Icon name="swap" size={14} />
                 </button>
               )}
@@ -181,29 +182,29 @@ export function TodayScreen({ eaten, setEaten, mealOverrides, setMealOverrides, 
         })}
       </div>
 
-      <div className="h-5" />
+      <div className={styles.h5} />
 
       {/* Tomorrow carousel */}
-      <div className="px-5 mb-3">
-        <div className="flex-row-between">
-          <p className="section-label mb-0">Tomorrow · {tomorrowData.full}</p>
-          <span className="text-swipe-hint">swipe ›</span>
+      <div className={`${styles.px5} ${styles.mb3}`}>
+        <div className={styles.flexRowBetween}>
+          <p className={`${styles.sectionLabel} ${styles.mb0}`}>Tomorrow · {tomorrowData.full}</p>
+          <span className={styles.textSwipeHint}>swipe ›</span>
         </div>
       </div>
-      <div className="carousel-scroll">
-        <div className="carousel-track">
+      <div className={styles.carouselScroll}>
+        <div className={styles.carouselTrack}>
           {(Object.keys(MEAL_LABELS) as MealType[]).map((type) => {
             const meal = getEffectiveMeal(tomorrowWeek, tomorrowDayIdx, type);
             return (
-              <div key={type} className="carousel-card" onClick={() => setDetailSheet({ meal, mealType: type })}>
-                <div className="carousel-card-top">
-                  <div className="meal-type-badge">{MEAL_LABELS[type]}</div>
-                  <button className="meal-swap-btn" onClick={(e) => openSwap(type, false, e)} aria-label="Swap meal">
+              <div key={type} className={styles.carouselCard} onClick={() => setDetailSheet({ meal, mealType: type })}>
+                <div className={styles.carouselCardTop}>
+                  <div className={styles.mealTypeBadge}>{MEAL_LABELS[type]}</div>
+                  <button className={styles.mealSwapBtn} onClick={(e) => openSwap(type, false, e)} aria-label="Swap meal">
                     <Icon name="swap" size={14} />
                   </button>
                 </div>
-                <div className="meal-name">{meal.name}</div>
-                <div className="meal-meta mt-1">~{meal.protein}g protein · {MEAL_TIMES[type]}</div>
+                <div className={styles.mealName}>{meal.name}</div>
+                <div className={`${styles.mealMeta} ${styles.mt1}`}>~{meal.protein}g protein · {MEAL_TIMES[type]}</div>
               </div>
             );
           })}
@@ -212,22 +213,22 @@ export function TodayScreen({ eaten, setEaten, mealOverrides, setMealOverrides, 
 
       {/* Swap modal */}
       {swapModal && (
-        <div className="modal-overlay" onClick={() => { setSwapModal(null); setSwapStep(null); }}>
-          <div className="modal-sheet" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-handle" />
-            <div className="modal-title">Swap {MEAL_LABELS[swapModal.mealType]}</div>
-            <div className="modal-sub">Choose a day to swap with</div>
+        <div className={styles.modalOverlay} onClick={() => { setSwapModal(null); setSwapStep(null); }}>
+          <div className={styles.modalSheet} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHandle} />
+            <div className={styles.modalTitle}>Swap {MEAL_LABELS[swapModal.mealType]}</div>
+            <div className={styles.modalSub}>Choose a day to swap with</div>
             <div className="scroll-auto">
               {allDays.filter((d) => !(d.week === swapStep?.srcWeek && d.dayIdx === swapStep?.srcDay)).map((d, i) => {
                 const m = mealOverrides[`${d.week}-${d.dayIdx}-${swapModal.mealType}`] || MEAL_PLAN[d.week].days[d.dayIdx].meals[swapModal.mealType];
                 return (
-                  <div key={i} className="swap-option" onClick={() => confirmSwap(d.week, d.dayIdx)}>
-                    <div className="swap-dot" />
-                    <div className="swap-option-info">
-                      <div className="swap-option-day">{d.label}</div>
-                      <div className="swap-option-name">{m.name}</div>
+                  <div key={i} className={styles.swapOption} onClick={() => confirmSwap(d.week, d.dayIdx)}>
+                    <div className={styles.swapDot} />
+                    <div className={styles.swapOptionInfo}>
+                      <div className={styles.swapOptionDay}>{d.label}</div>
+                      <div className={styles.swapOptionName}>{m.name}</div>
                     </div>
-                    <span className="swap-option-protein">~{m.protein}g</span>
+                    <span className={styles.swapOptionProtein}>~{m.protein}g</span>
                   </div>
                 );
               })}

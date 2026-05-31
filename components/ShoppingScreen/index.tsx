@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Icon } from './Icons';
+import { Icon } from '../Icons';
 import { SHOPPING_LIST, ShoppingCategory } from '@/lib/meal-data';
+import styles from './ShoppingScreen.module.css';
 
 type ShoppingCategoryKey = keyof ShoppingCategory;
 
@@ -71,12 +72,12 @@ export function ShoppingScreen() {
       </div>
 
       {/* Category chips */}
-      <div className="cat-scroll">
-        <div className="cat-chips">
+      <div className={styles.catScroll}>
+        <div className={styles.catChips}>
           {categories.map(cat => (
             <button
               key={cat}
-              className={`cat-chip ${activeCategory === cat ? 'active' : ''}`}
+              className={`${styles.catChip} ${activeCategory === cat ? styles.catChipActive : ''}`}
               onClick={() => setActiveCategory(cat)}
             >
               {categoryLabels[cat]}
@@ -86,23 +87,23 @@ export function ShoppingScreen() {
       </div>
 
       {/* Shopping list */}
-      <div className="shop-list">
+      <div className={styles.shopList}>
         {currentItems.map((item, index) => (
           <div
             key={index}
-            className="shop-item"
+            className={styles.shopItem}
             onClick={() => !loading && toggleItem(item.item)}
           >
-            <div className={`shop-check ${checkedItems[item.item] ? 'checked' : ''}`}>
+            <div className={`${styles.shopCheck} ${checkedItems[item.item] ? styles.shopCheckChecked : ''}`}>
               {checkedItems[item.item] && '✓'}
             </div>
-            <div className="shop-item-info">
-              <div className={`shop-item-name ${checkedItems[item.item] ? 'checked' : ''}`}>
+            <div className={styles.shopItemInfo}>
+              <div className={`${styles.shopItemName} ${checkedItems[item.item] ? styles.shopItemNameChecked : ''}`}>
                 {item.item}
               </div>
-              <div className="shop-item-qty">{item.qty}</div>
+              <div className={styles.shopItemQty}>{item.qty}</div>
             </div>
-            <button className="shop-swap-btn" onClick={e => { e.stopPropagation(); /* TODO: swap modal */ }}>
+            <button className={styles.shopSwapBtn} onClick={e => { e.stopPropagation(); /* TODO: swap modal */ }}>
               <Icon name="swap" size={16} />
             </button>
           </div>
@@ -110,14 +111,14 @@ export function ShoppingScreen() {
       </div>
 
       {/* Progress indicator */}
-      <div className="card my-5">
+      <div className={`card ${styles.my5}`}>
         <div className="card-padding">
-          <div className="flex-row-between mb-2">
-            <span className="text-caption">Shopping progress</span>
-            <span className="text-caption-bold">{checkedCount}/{totalCount}</span>
+          <div className={`${styles.flexRowBetween} ${styles.mb2}`}>
+            <span className={styles.textCaption}>Shopping progress</span>
+            <span className={styles.textCaptionBold}>{checkedCount}/{totalCount}</span>
           </div>
-          <div className="progress-track">
-            <div className="progress-fill" style={{ width: `${(checkedCount / totalCount) * 100}%` }} />
+          <div className={styles.progressTrack}>
+            <div className={styles.progressFill} style={{ width: `${(checkedCount / totalCount) * 100}%` }} />
           </div>
         </div>
       </div>

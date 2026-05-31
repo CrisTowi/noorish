@@ -1,6 +1,7 @@
 'use client';
 
-import { Icon } from './Icons';
+import { Icon } from '../Icons';
+import styles from './BottomNavigation.module.css';
 
 type NavItem = 'today' | 'plan' | 'shopping' | 'favorites';
 
@@ -18,18 +19,18 @@ const navItems: { key: NavItem; label: string; iconName: 'house' | 'calendar' | 
 
 export function BottomNavigation({ active, onNavigate }: BottomNavigationProps) {
   return (
-    <nav className="bottom-nav">
+    <nav className={styles.nav}>
       {navItems.map(item => (
         <button
           key={item.key}
-          className={`nav-item ${active === item.key ? 'active' : ''}`}
+          className={`${styles.item} ${active === item.key ? styles.active : ''}`}
           onClick={() => onNavigate(item.key)}
           aria-label={item.label}
         >
-          <div className="nav-icon">
+          <div className={styles.icon}>
             <Icon name={item.iconName} size={28} />
           </div>
-          <span className="nav-label">{item.label}</span>
+          <span className={styles.label}>{item.label}</span>
         </button>
       ))}
     </nav>
