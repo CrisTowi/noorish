@@ -7,6 +7,7 @@ import { PlanScreen } from '@/components/PlanScreen';
 import { ShoppingScreen } from '@/components/ShoppingScreen';
 import { FavoritesScreen } from '@/components/FavoritesScreen';
 import { MealType } from '@/lib/meal-data';
+import type { MealLog } from '@/lib/db';
 
 type NavItem = 'today' | 'plan' | 'shopping' | 'favorites';
 
@@ -53,7 +54,7 @@ export default function Home() {
             dinner: false,
           };
           
-          data.data.forEach((log) => {
+          data.data.forEach((log: MealLog) => {
             if (log.wasEaten && log.mealType) {
               savedEaten[log.mealType as MealType] = true;
             }
