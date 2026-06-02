@@ -8,6 +8,37 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 const isCI = process.env.CI === 'true';
 
+const projects = [
+  {
+    extends: true,
+    test: {
+      environment: 'jsdom',
+      globals: true,
+      setupFiles: ['./src/test/setup.ts']
+    }
+  }
+];
+
+if (!isCI) {
+  projects.push({
+    extends: true,
+    plugins: [
+      storybookTest({
+        configDir: path.join(dirname, '.storybook')
+      })
+    ],
+    test: {
+      name: 'storybook',
+      browser: {
+        enabled: true,
+        headless: true,
+        provider: playwright({}),
+        instances: [{ browser: 'chromium' }]
+      }
+    }
+  });
+}
+
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [react()],
@@ -17,34 +48,6 @@ export default defineConfig({
     }
   },
   test: {
-    projects: [
-      {
-        extends: true,
-        test: {
-          environment: 'jsdom',
-          globals: true,
-          setupFiles: ['./src/test/setup.ts']
-        }
-      },
-      ...(isCI ? [] : [
-        {
-          extends: true,
-          plugins: [
-            storybookTest({
-              configDir: path.join(dirname, '.storybook')
-            })
-          ],
-          test: {
-            name: 'storybook',
-            browser: {
-              enabled: true,
-              headless: true,
-              provider: playwright({}),
-              instances: [{ browser: 'chromium' }]
-            }
-          }
-        } as const
-      ])
-    ]
+    projects
   }
 });
