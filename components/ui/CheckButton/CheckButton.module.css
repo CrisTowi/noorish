@@ -1,0 +1,119 @@
+@keyframes checkFill {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.22); }
+  65%  { transform: scale(0.9); }
+  85%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@keyframes checkmarkDraw {
+  from { stroke-dashoffset: 20; opacity: 0; }
+  to   { stroke-dashoffset: 0;  opacity: 1; }
+}
+
+@keyframes ringBurst {
+  from { transform: scale(0.6); opacity: 0.7; }
+  to   { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes particle {
+  from { transform: translate(0, 0) scale(1); opacity: 1; }
+  to   { transform: translate(var(--px), var(--py)) scale(0); opacity: 0; }
+}
+
+.checkButton {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--muted-light);
+  background: none;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+  transition: border-color 0.2s;
+}
+
+.checkButton:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 2px;
+}
+
+.done {
+  background: var(--olive);
+  border-color: var(--olive);
+}
+
+.animating {
+  animation: checkFill 0.45s cubic-bezier(.36,.07,.19,.97) forwards;
+  border-color: var(--olive);
+  background: var(--olive);
+}
+
+.checkSvg {
+  width: 13px;
+  height: 10px;
+  position: absolute;
+  overflow: visible;
+}
+
+.checkPath {
+  fill: none;
+  stroke: white;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+}
+
+.animating .checkPath,
+.done .checkPath {
+  animation: checkmarkDraw 0.35s ease 0.1s forwards;
+}
+
+.checkRing {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--olive);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.animating .checkRing {
+  animation: ringBurst 0.5s ease-out 0.05s forwards;
+}
+
+.checkParticles {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.checkParticle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--olive);
+  opacity: 0;
+  top: -2px;
+  left: -2px;
+}
+
+.animating .checkParticle {
+  animation: particle 0.5s ease-out 0.1s forwards;
+}
+
+.checkParticle:nth-child(1) { --px: -14px; --py: -12px; }
+.checkParticle:nth-child(2) { --px:  14px; --py: -12px; background: var(--olive-light); }
+.checkParticle:nth-child(3) { --px: -16px; --py:   4px; background: var(--sky); }
+.checkParticle:nth-child(4) { --px:  16px; --py:   4px; }
+.checkParticle:nth-child(5) { --px:  -6px; --py:  15px; background: var(--olive-light); }
+.checkParticle:nth-child(6) { --px:   6px; --py:  15px; background: var(--sky); }

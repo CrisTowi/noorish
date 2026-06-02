@@ -1,0 +1,27 @@
+.pageHeader {
+  padding: 12px 20px 20px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 4px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}

@@ -1,0 +1,24 @@
+.badge {
+  display: inline-flex;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.olive {
+  background: var(--olive-pale);
+  color: var(--olive);
+}
+
+.sky {
+  background: var(--sky);
+  color: var(--sky-deep);
+}
+
+.sand {
+  background: var(--sand-deep);
+  color: var(--ink-soft);
+}

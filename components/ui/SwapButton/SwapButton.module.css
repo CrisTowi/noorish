@@ -1,0 +1,24 @@
+.swapButton {
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+
+.swapButton:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 2px;
+}
+
+.swapButton:active {
+  background: var(--sand);
+  border-color: var(--olive);
+}
