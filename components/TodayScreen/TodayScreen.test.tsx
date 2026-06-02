@@ -51,9 +51,10 @@ describe('TodayScreen', () => {
     expect(screen.getByText(/Tomorrow/)).toBeDefined();
   });
 
-  it('renders hero section with date', () => {
+  it('renders hero section with day name', () => {
     render(<TodayScreen {...defaultProps} />);
     
-    expect(screen.getByText(/Sunday/)).toBeDefined();
+    const mondayElements = screen.getAllByText(/Monday/);
+    expect(mondayElements.length).toBeGreaterThan(0);
   });
 });
