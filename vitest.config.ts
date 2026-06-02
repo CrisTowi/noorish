@@ -25,10 +25,10 @@ export default defineConfig({
           globals: true,
           setupFiles: ['./src/test/setup.ts']
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } as any,
+      },
       ...(isCI ? [] : [
-        {
+        // @ts-expect-error - Storybook project types don't align with Vitest's base config
+        ({
           extends: true,
           plugins: [
             storybookTest({
@@ -44,8 +44,7 @@ export default defineConfig({
               instances: [{ browser: 'chromium' }]
             }
           }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any
+        } as const)
       ])
     ]
   }
