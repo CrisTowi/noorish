@@ -17,30 +17,34 @@ export default defineConfig({
     }
   },
   test: {
-    projects: [{
-      extends: true,
-      test: {
-        environment: 'jsdom',
-        globals: true,
-        setupFiles: ['./src/test/setup.ts']
-      }
-    }, ...(isCI ? [] : [{
-      extends: true,
-      plugins: [
-      storybookTest({
-        configDir: path.join(dirname, '.storybook')
-      })],
-      test: {
-        name: 'storybook',
-        browser: {
-          enabled: true,
-          headless: true,
-          provider: playwright({}),
-          instances: [{
-            browser: 'chromium'
-          }]
+    projects: [
+      {
+        extends: true,
+        test: {
+          environment: 'jsdom',
+          globals: true,
+          setupFiles: ['./src/test/setup.ts']
         }
-      }
-    }])]
+      },
+      ...(isCI ? [] : [
+        {
+          extends: true,
+          plugins: [
+            storybookTest({
+              configDir: path.join(dirname, '.storybook')
+            })
+          ],
+          test: {
+            name: 'storybook',
+            browser: {
+              enabled: true,
+              headless: true,
+              provider: playwright({}),
+              instances: [{ browser: 'chromium' }]
+            }
+          }
+        } as const
+      ])
+    ]
   }
 });
