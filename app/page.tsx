@@ -53,7 +53,7 @@ export default function Home() {
             dinner: false,
           };
           
-          data.data.forEach((log: any) => {
+          data.data.forEach((log) => {
             if (log.wasEaten && log.mealType) {
               savedEaten[log.mealType as MealType] = true;
             }

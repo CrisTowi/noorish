@@ -140,7 +140,7 @@ export async function getMealLogs(date: string): Promise<MealLog[]> {
       args: [date]
     });
 
-    return result.rows.map((row: any) => ({
+    return result.rows.map((row) => ({
       id: Number(row.id),
       date: String(row.date),
       mealType: row.meal_type as MealType,
@@ -193,7 +193,7 @@ export async function getFavorites(): Promise<FavoriteItem[]> {
       'SELECT id, name, meal_type, protein_grams, calories, saved_at FROM favorites ORDER BY saved_at DESC'
     );
 
-    return result.rows.map((row: any) => ({
+    return result.rows.map((row) => ({
       id: Number(row.id),
       name: String(row.name),
       mealType: row.meal_type as MealType,
@@ -257,7 +257,7 @@ export async function getShoppingItems(): Promise<ShoppingItem[]> {
       'SELECT id, category, item_name, quantity, was_checked FROM shopping_items'
     );
 
-    return result.rows.map((row: any) => ({
+    return result.rows.map((row) => ({
       id: Number(row.id),
       category: row.category as 'proteins' | 'produce' | 'pantry',
       itemName: String(row.item_name),

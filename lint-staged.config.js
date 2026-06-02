@@ -1,3 +1,4 @@
 module.exports = {
-  '*.{ts,tsx}': ['eslint --fix', 'vitest run'],
+  '*.{ts,tsx}': ['eslint --fix'],
+  '*.test.{ts,tsx}': ['vitest run --run'],
 };
