@@ -131,14 +131,6 @@
   letter-spacing: -0.02em;
 }
 
-.divider {
-  width: 48px;
-  height: 2px;
-  background: var(--olive-pale);
-  border-radius: 1px;
-  margin-bottom: 32px;
-}
-
 .heroTitle {
   font-family: var(--font-serif);
   font-size: 32px;

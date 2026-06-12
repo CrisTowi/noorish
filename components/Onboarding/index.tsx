@@ -104,7 +104,6 @@ export function Onboarding({ onComplete }: OnboardingProps) {
         {step === 0 && (
           <div className={styles.step0}>
             <div className={styles.brand}>noorish</div>
-            <div className={styles.divider} />
             <h1 className={styles.heroTitle}>
               Eat with intention.
               <br />
