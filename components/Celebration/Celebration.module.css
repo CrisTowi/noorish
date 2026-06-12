@@ -1,0 +1,250 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(10, 10, 10, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  animation: overlayIn 0.25s ease;
+}
+
+.overlayClosing {
+  animation: overlayOut 0.3s ease forwards;
+}
+
+.sheet {
+  width: 100%;
+  max-width: 430px;
+  background: var(--surface);
+  border-radius: 24px 24px 0 0;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  animation: sheetUp 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sheetClosing {
+  animation: sheetDown 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.handleRow {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px 8px;
+  flex-shrink: 0;
+}
+
+.handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  margin: 0 auto;
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 28px 32px;
+}
+
+.badge {
+  margin-bottom: 4px;
+  animation: badgePop 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.badgeHidden {
+  margin-bottom: 4px;
+  opacity: 0;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 6px;
+  animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+.titleHidden {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 6px;
+  opacity: 0;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 28px;
+  font-family: var(--font-sans);
+  animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+.subtitleHidden {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 28px;
+  font-family: var(--font-sans);
+  opacity: 0;
+}
+
+.weekRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+  animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+.weekRowHidden {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+  opacity: 0;
+}
+
+.weekCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.weekLabel,
+.weekLabelDone {
+  font-size: 11px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+}
+
+.weekLabel {
+  color: var(--muted-light);
+}
+
+.weekLabelDone {
+  color: var(--success);
+}
+
+.weekDot,
+.weekDotDone {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weekDot {
+  background: transparent;
+  border: 1.5px solid var(--border);
+}
+
+.weekDotDone {
+  background: var(--success);
+}
+
+.statsCard {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+
+.statsCardHidden {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  opacity: 0;
+}
+
+.statsLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--olive);
+  text-align: center;
+  margin-bottom: 12px;
+  font-family: var(--font-sans);
+}
+
+.statsRow {
+  display: flex;
+}
+
+.statCell,
+.statCellLast {
+  flex: 1;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+
+.statCellLast {
+  border-right: none;
+}
+
+.statL {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: var(--font-sans);
+}
+
+.statV {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.actions {
+  width: 100%;
+  animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+
+.actionsHidden {
+  width: 100%;
+  opacity: 0;
+}
+
+.primaryBtn {
+  width: 100%;
+  background: var(--olive);
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--white);
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.secondaryBtn {
+  width: 100%;
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--muted);
+  padding: 8px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}

@@ -1,0 +1,196 @@
+.header {
+  padding: 28px 20px 20px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 6px;
+  font-family: var(--font-sans);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 300;
+  color: var(--ink);
+}
+
+.statsWrap {
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.statsCard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px 20px 14px;
+}
+
+.statsLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--olive);
+  text-align: center;
+  margin-bottom: 14px;
+  font-family: var(--font-sans);
+}
+
+.statsRow {
+  display: flex;
+}
+
+.statCell,
+.statCellLast {
+  flex: 1;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+
+.statCellLast {
+  border-right: none;
+}
+
+.statL {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: var(--font-sans);
+}
+
+.statV {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.section {
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.sectionLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  font-family: var(--font-sans);
+}
+
+.dayGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dayChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 14px;
+}
+
+.dayIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--olive-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dayName {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.dayMeta {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.emptyWeek {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.emptyIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px dashed var(--border);
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-light);
+}
+
+.emptyText {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.weekRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.weekBody {
+  flex: 1;
+}
+
+.weekTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+
+.weekMeta {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.weekTag {
+  background: var(--olive-pale);
+  color: var(--olive);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+}
+
+.bottomSpacer {
+  height: 16px;
+}
