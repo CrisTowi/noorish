@@ -1,0 +1,97 @@
+.header {
+  padding: 28px 20px 20px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 6px;
+  font-family: var(--font-sans);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 300;
+  color: var(--ink);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 40px;
+  gap: 12px;
+  text-align: center;
+}
+
+.emptyIcon {
+  opacity: 0.2;
+  color: var(--ink);
+}
+
+.emptyText {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 0 20px 8px;
+}
+
+.rowBody {
+  flex: 1;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.rowType {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 3px;
+  font-family: var(--font-sans);
+}
+
+.rowName {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.rowMeta {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.unsaveBtn {
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: 1.5px solid var(--olive);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--olive);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.bottomSpacer {
+  height: 16px;
+}

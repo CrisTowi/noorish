@@ -1,0 +1,10 @@
+.animate {
+  border-radius: 50%;
+  background: var(--sand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  animation: badgePop 0.65s cubic-bezier(.22, 1, .36, 1) forwards;
+}

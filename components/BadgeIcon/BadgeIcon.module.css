@@ -1,0 +1,41 @@
+.flourish {
+  animation: badgeFlourish 2.2s ease-in-out 0.6s infinite;
+}
+
+.leafL {
+  transform-origin: 36px 40px;
+  animation: badgeLeafL 3.2s ease-in-out 0.8s infinite;
+}
+
+.leafR {
+  transform-origin: 36px 32px;
+  animation: badgeLeafR 3.8s ease-in-out 0.5s infinite reverse;
+}
+
+.spin {
+  animation: badgeSpin 8s linear infinite;
+}
+
+.spinSlow {
+  animation: badgeSpin 6s linear infinite;
+}
+
+.pulse {
+  transform-origin: 36px 36px;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+.pulseSlow {
+  transform-origin: 36px 36px;
+  animation: badgePulse 2.8s ease-in-out infinite;
+}
+
+.sway {
+  transform-origin: 36px 54px;
+  animation: badgeSway 3s ease-in-out infinite;
+}
+
+.wiggle {
+  transform-origin: 36px 36px;
+  animation: badgeWiggle 2.5s ease-in-out infinite;
+}
