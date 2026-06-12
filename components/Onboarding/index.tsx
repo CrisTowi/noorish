@@ -100,7 +100,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
         </button>
       )}
 
-      <div key={animKey} className={step === 0 ? undefined : slideAnim}>
+      <div key={animKey} className={step === 0 ? styles.step0Wrap : slideAnim}>
         {step === 0 && (
           <div className={styles.step0}>
             <div className={styles.brand}>noorish</div>

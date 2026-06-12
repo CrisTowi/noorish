@@ -97,6 +97,12 @@
   z-index: 1;
 }
 
+.step0Wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .step0,
 .stepBody,
 .step4 {
